@@ -15,6 +15,7 @@ replay_pid*
 ##############################
 bin/
 build/
+.gradle/
 .gradle
 .gradletasknamecache
 gradle-app.setting

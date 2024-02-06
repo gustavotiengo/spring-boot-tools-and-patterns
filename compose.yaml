@@ -10,6 +10,15 @@ services:
       - '5432:5432'
     volumes:
       - db:/var/lib/postgresql/data
+  flyway:
+    image: flyway/flyway:9.22.3-alpine
+    environment:
+      - FLYWAY_EDITION=community
+    command: -url=jdbc:postgresql://db:5432/petcatalog -schemas=public -user=admin -password=admin -connectRetries=3 migrate
+    volumes:
+      - ./src/main/resources/db/migration:/flyway/sql/
+    depends_on:
+      - db
 volumes:
   db:
     driver: local
