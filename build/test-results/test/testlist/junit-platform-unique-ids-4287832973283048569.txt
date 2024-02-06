@@ -1,1 +1,0 @@
-[engine:junit-jupiter]/[class:com.gt.petcatalog.PetcatalogApplicationTests]/[method:contextLoads()]

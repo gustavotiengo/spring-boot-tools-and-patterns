@@ -3,6 +3,7 @@ plugins {
 	id 'org.springframework.boot' version '3.2.2'
 	id 'io.spring.dependency-management' version '1.1.4'
 	id 'org.graalvm.buildtools.native' version '0.9.28'
+	id 'nu.studer.jooq' version '9.0'
 }
 
 group = 'com.gt'
@@ -25,13 +26,63 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-jooq'
+
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
 	runtimeOnly 'org.postgresql:postgresql'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	jooqGenerator 'org.postgresql:postgresql'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+jooq {
+	version = '3.18.10'  // default (can be omitted)
+
+	configurations {
+		main {
+			generationTool {
+				jdbc {
+					driver = 'org.postgresql.Driver'
+					url = 'jdbc:postgresql://localhost:5432/petcatalog'
+					user = 'admin'
+					password = 'admin'
+				}
+				generator {
+					name = 'org.jooq.codegen.DefaultGenerator'
+					database {
+						name = 'org.jooq.meta.postgres.PostgresDatabase'
+						inputSchema = 'public'
+						forcedTypes {
+							forcedType {
+								name = 'varchar'
+								includeExpression = '.*'
+								includeTypes = 'JSONB?'
+							}
+							forcedType {
+								name = 'varchar'
+								includeExpression = '.*'
+								includeTypes = 'INET'
+							}
+						}
+					}
+					generate {
+						deprecated = false
+						records = true
+						immutablePojos = true
+						fluentSetters = true
+					}
+					target {
+						packageName = 'com.gt.petcatalog'
+					}
+					strategy.name = 'org.jooq.codegen.DefaultGeneratorStrategy'
+				}
+			}
+		}
+	}
 }
