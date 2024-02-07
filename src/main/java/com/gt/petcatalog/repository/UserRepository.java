@@ -11,13 +11,13 @@ import static com.gt.petcatalog.Tables.USERS;
 @Repository
 public class UserRepository {
 
-    final DSLContext create;
+    private final DSLContext dbContext;
 
-    public UserRepository(DSLContext create) {
-        this.create = create;
+    public UserRepository(final DSLContext dbContext) {
+        this.dbContext = dbContext;
     }
 
      public List<Users> findAll() {
-         return create.select().from(USERS).fetchInto(Users.class);
+         return dbContext.select().from(USERS).fetchInto(Users.class);
     }
 }

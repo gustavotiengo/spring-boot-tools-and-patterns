@@ -1,6 +1,16 @@
+server:
+  port: 8085
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/petcatalog
     password: admin
     username: admin
+  output:
+    ansi:
+      enabled: DETECT
+logging:
+  level:
+    root: ERROR
+    org.springframework.boot: ERROR
+    com.gt.petcatalog: DEBUG
