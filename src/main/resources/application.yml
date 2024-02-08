@@ -1,9 +1,22 @@
 server:
   port: 8080
+management:
+  server:
+    port: 8081
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus,liveness,readiness
+  endpoint:
+    health:
+      show-details: always
+  health:
+    probes:
+      enabled: true
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/petcatalog
+    url: jdbc:postgresql://postgres:5432/petcatalog
     password: admin
     username: admin
   output:

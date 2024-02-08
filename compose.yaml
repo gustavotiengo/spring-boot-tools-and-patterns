@@ -1,24 +1,49 @@
 version: '3.8'
 services:
-  db:
+  app:
+    restart: unless-stopped
+    build:
+      dockerfile: Dockerfile
+      context: .
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+  postgres:
+    restart: unless-stopped
     image: 'postgres:15.1-alpine'
     environment:
-      - 'POSTGRES_DB=petcatalog'
-      - 'POSTGRES_PASSWORD=admin'
-      - 'POSTGRES_USER=admin'
+      - "POSTGRES_DB=petcatalog"
+      - "POSTGRES_PASSWORD=admin"
+      - "POSTGRES_USER=admin"
     ports:
-      - '5432:5432'
+      - "5432:5432"
     volumes:
       - db:/var/lib/postgresql/data
   flyway:
     image: flyway/flyway:9.22.3-alpine
     environment:
       - FLYWAY_EDITION=community
-    command: -url=jdbc:postgresql://db:5432/petcatalog -schemas=public -user=admin -password=admin -connectRetries=3 migrate
+    command: -url=jdbc:postgresql://postgres:5432/petcatalog -schemas=public -user=admin -password=admin -connectRetries=3 migrate
     volumes:
       - ./src/main/resources/db/migration:/flyway/sql/
     depends_on:
-      - db
+      - postgres
+  prometheus:
+    restart: unless-stopped
+    image: bitnami/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+  grafana:
+    restart: unless-stopped
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./monitoring/grafana/datasources:/etc/grafana/provisioning/datasources
 volumes:
   db:
     driver: local
