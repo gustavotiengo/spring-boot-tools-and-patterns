@@ -23,4 +23,4 @@ logging:
   level:
     root: ERROR
     org.springframework.boot: ERROR
-    com.gt.petcatalog: WARN
+    com.gt.petcatalog: DEBUG
