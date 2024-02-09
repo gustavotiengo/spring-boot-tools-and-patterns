@@ -6,7 +6,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info,prometheus,liveness,readiness
+        include: health
   endpoint:
     health:
       show-details: always
@@ -16,9 +16,12 @@ management:
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://postgres:5432/petcatalog
+    url: jdbc:postgresql://localhost:5432/petcatalog
     password: admin
     username: admin
+  output:
+    ansi:
+      enabled: ALWAYS
 logging:
   level:
     root: ERROR

@@ -48,14 +48,14 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
-tasks.register('bootRunLocal') {
+tasks.register('bootRunProd') {
 	group 'application'
 	bootRun.configure {
-		systemProperty "spring.profiles.active", 'local'
+		systemProperty "spring.profiles.active", 'prod'
 	}
 }
 
-bootRunLocal.finalizedBy bootRun
+bootRunProd.finalizedBy bootRun
 
 jooq {
 	version = '3.18.10'

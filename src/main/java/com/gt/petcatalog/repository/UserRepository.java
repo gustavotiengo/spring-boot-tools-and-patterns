@@ -37,7 +37,10 @@ public class UserRepository {
 
     public Users persist(Users user) {
         UsersRecord record = new UsersRecord(user);
-        record.setExternalId(UUID.randomUUID());
+
+        if (user.getExternalId() == null) {
+            record.setExternalId(UUID.randomUUID());
+        }
 
         int execution = dbContext.
                 insertInto(USERS).
