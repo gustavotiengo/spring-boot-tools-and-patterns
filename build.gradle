@@ -3,6 +3,7 @@ plugins {
 	id 'org.springframework.boot' version '3.2.2'
 	id 'io.spring.dependency-management' version '1.1.4'
 	id 'nu.studer.jooq' version '9.0'
+	id 'com.dorongold.task-tree' version '2.1.1'
 }
 
 group = 'com.gt'
@@ -36,11 +37,8 @@ dependencies {
 	implementation 'io.micrometer:micrometer-registry-prometheus'
 	implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.3.0'
 
-
-	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
 	runtimeOnly 'org.postgresql:postgresql'
-	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 	jooqGenerator 'org.postgresql:postgresql'
@@ -50,8 +48,17 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
+tasks.register('bootRunLocal') {
+	group 'application'
+	bootRun.configure {
+		systemProperty "spring.profiles.active", 'local'
+	}
+}
+
+bootRunLocal.finalizedBy bootRun
+
 jooq {
-	version = '3.18.10'  // default (can be omitted)
+	version = '3.18.10'
 
 	configurations {
 		main {
@@ -93,5 +100,12 @@ jooq {
 				}
 			}
 		}
+	}
+}
+
+tasks.named('generateJooq').configure { allInputsDeclared = true }
+tasks.named('generateJooq').configure {
+	launcher = javaToolchains.launcherFor {
+		languageVersion = JavaLanguageVersion.of(17)
 	}
 }

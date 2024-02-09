@@ -2,11 +2,11 @@ server:
   port: 8080
 management:
   server:
-    port: 8081
+    port: 8080
   endpoints:
     web:
       exposure:
-        include: health,info,prometheus,liveness,readiness
+        include: health
   endpoint:
     health:
       show-details: always
@@ -16,11 +16,14 @@ management:
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://postgres:5432/petcatalog
+    url: jdbc:postgresql://localhost:5432/petcatalog
     password: admin
     username: admin
+  output:
+    ansi:
+      enabled: ALWAYS
 logging:
   level:
     root: ERROR
     org.springframework.boot: ERROR
-    com.gt.petcatalog: WARN
+    com.gt.petcatalog: DEBUG
