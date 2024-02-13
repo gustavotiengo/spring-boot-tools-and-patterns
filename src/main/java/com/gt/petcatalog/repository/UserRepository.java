@@ -36,17 +36,21 @@ public class UserRepository {
     }
 
     public Users persist(Users user) {
-        UsersRecord record = new UsersRecord(user);
+        UsersRecord userRecord = new UsersRecord(user);
 
         if (user.getExternalId() == null) {
-            record.setExternalId(UUID.randomUUID());
+            userRecord.setExternalId(UUID.randomUUID());
         }
 
         int execution = dbContext.
                 insertInto(USERS).
-                set(record).
+                set(userRecord).
                 onDuplicateKeyUpdate().
-                set(record).execute();
+                set(userRecord).execute();
+
+        if (execution == 1) {
+            return user;
+        }
 
         return null;
     }

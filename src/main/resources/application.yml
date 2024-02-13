@@ -19,6 +19,12 @@ spring:
     url: jdbc:postgresql://localhost:5432/petcatalog
     password: admin
     username: admin
+  redis:
+    host: ${HOST:localhost}
+    port: ${PORT:6379}
+  cache:
+    type: redis
+    cache-names: users
   output:
     ansi:
       enabled: ALWAYS
@@ -27,3 +33,8 @@ logging:
     root: ERROR
     org.springframework.boot: ERROR
     com.gt.petcatalog: DEBUG
+cache:
+  config:
+    entryTtl: 60
+    users:
+      entryTtl: 30

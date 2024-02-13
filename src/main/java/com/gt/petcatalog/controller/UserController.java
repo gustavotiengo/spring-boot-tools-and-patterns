@@ -39,14 +39,14 @@ public class UserController {
     @PostMapping
     public ResponseEntity<Users> save(@RequestBody final Users user) {
         // get request information to log and audit
-        logger.debug("save request received", user.toString());
+        logger.debug("save request received");
 
         // call save service
         final Optional<Users> saved = this.userService.save(user);
 
         // if saved is empty, return accepted because fallback process will be executed
         if (saved.isEmpty()) {
-            logger.error("error persisting user");
+            logger.error("TO-DO FALLBACK");
             return ResponseEntity.accepted().build();
         }
 

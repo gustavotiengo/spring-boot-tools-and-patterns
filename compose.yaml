@@ -7,11 +7,11 @@ services:
       context: .
     depends_on:
       - postgres
+      - redis
     ports:
       - "8080:8080"
       - "8081:8081"
   postgres:
-    restart: unless-stopped
     image: 'postgres:15.1-alpine'
     environment:
       - "POSTGRES_DB=petcatalog"
@@ -20,7 +20,28 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - db:/var/lib/postgresql/data
+      - postgres:/var/lib/postgresql/data
+    restart: unless-stopped
+  redis:
+    image: redis:7.2.3-alpine
+    command: redis-server
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis:/data
+    networks:
+      - redis-network
+    restart: unless-stopped
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    environment:
+      - REDIS_HOSTS=redis
+    ports:
+      - "8082:8081"
+    networks:
+      - redis-network
+    depends_on:
+      - redis
   flyway:
     image: flyway/flyway:9.22.3-alpine
     environment:
@@ -45,5 +66,10 @@ services:
     volumes:
       - ./monitoring/grafana/datasources:/etc/grafana/provisioning/datasources
 volumes:
-  db:
+  postgres:
     driver: local
+  redis:
+    driver: local
+networks:
+  redis-network:
+    driver: bridge

@@ -34,6 +34,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-jooq'
 	implementation 'org.springframework.boot:spring-boot-starter-log4j2'
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis:3.2.2'
 	implementation 'io.micrometer:micrometer-registry-prometheus'
 	implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.3.0'
 
@@ -48,14 +49,17 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
+tasks.named('bootRun') {
+	systemProperty "spring.profiles.active", 'default'
+}
+
 tasks.register('bootRunProd') {
 	group 'application'
 	bootRun.configure {
 		systemProperty "spring.profiles.active", 'prod'
 	}
+	finalizedBy(bootRun)
 }
-
-bootRunProd.finalizedBy bootRun
 
 jooq {
 	version = '3.18.10'

@@ -19,8 +19,19 @@ spring:
     url: jdbc:postgresql://postgres:5432/petcatalog
     password: admin
     username: admin
+  redis:
+    host: ${HOST:localhost}
+    port: ${PORT:6379}
+  cache:
+    type: redis
+    cache-names: users
 logging:
   level:
     root: ERROR
     org.springframework.boot: ERROR
     com.gt.petcatalog: DEBUG
+cache:
+  config:
+    entryTtl: 10
+    users:
+      entryTtl: 5
