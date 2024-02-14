@@ -1,1 +1,2 @@
 rootProject.name = 'petcatalog'
+System.setProperty("sonar.gradle.skipCompile", "true")
