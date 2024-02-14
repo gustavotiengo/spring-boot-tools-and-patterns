@@ -18,7 +18,14 @@ configurations {
 		extendsFrom annotationProcessor
 	}
 
-	all*.exclude module : 'spring-boot-starter-logging'
+	all*.exclude module : "spring-boot-starter-logging"
+}
+
+ext {
+	springVersion = "3.2.2"
+	postgresVersion = "42.6.0"
+	micrometerVersion = "1.12.3"
+	springDocVersion = "2.3.0"
 }
 
 repositories {
@@ -29,20 +36,20 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-jooq'
-	implementation 'org.springframework.boot:spring-boot-starter-log4j2'
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	implementation 'org.springframework.boot:spring-boot-starter-data-redis:3.2.2'
-	implementation 'io.micrometer:micrometer-registry-prometheus'
-	implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.3.0'
+	implementation "org.springframework.boot:spring-boot-starter:$springVersion"
+	implementation "org.springframework.boot:spring-boot-starter-web:$springVersion"
+	implementation "org.springframework.boot:spring-boot-starter-jooq:$springVersion"
+	implementation "org.springframework.boot:spring-boot-starter-log4j2:$springVersion"
+	implementation "org.springframework.boot:spring-boot-starter-actuator:$springVersion"
+	implementation "org.springframework.boot:spring-boot-starter-data-redis:$springVersion"
+	implementation "io.micrometer:micrometer-registry-prometheus:$micrometerVersion"
+	implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:$springDocVersion"
 
-	developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
-	runtimeOnly 'org.postgresql:postgresql'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	developmentOnly "org.springframework.boot:spring-boot-docker-compose:$springVersion"
+	runtimeOnly "org.postgresql:postgresql:$postgresVersion"
+	testImplementation "org.springframework.boot:spring-boot-starter-test"
 
-	jooqGenerator 'org.postgresql:postgresql'
+	jooqGenerator "org.postgresql:postgresql:$postgresVersion"
 }
 
 tasks.named('test') {
@@ -50,13 +57,13 @@ tasks.named('test') {
 }
 
 tasks.named('bootRun') {
-	systemProperty "spring.profiles.active", 'default'
+	systemProperty "spring.profiles.active", "default"
 }
 
 tasks.register('bootRunProd') {
 	group 'application'
 	bootRun.configure {
-		systemProperty "spring.profiles.active", 'prod'
+		systemProperty "spring.profiles.active", "prod"
 	}
 	finalizedBy(bootRun)
 }
