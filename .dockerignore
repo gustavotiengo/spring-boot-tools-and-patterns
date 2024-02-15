@@ -1,0 +1,7 @@
+**/*.class
+**/*.java
+**/*.md
+gradle
+.git
+.cache
+.gradle
