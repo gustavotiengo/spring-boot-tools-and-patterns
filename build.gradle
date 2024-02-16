@@ -70,6 +70,10 @@ tasks.register('bootRunProd') {
 	finalizedBy(bootRun)
 }
 
+bootJar {
+	archiveFileName = 'app.jar'
+}
+
 jacocoTestReport {
 	reports {
 		xml.required = true

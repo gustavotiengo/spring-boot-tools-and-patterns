@@ -29,8 +29,6 @@ services:
       - "6379:6379"
     volumes:
       - redis:/data
-    networks:
-      - redis-network
     restart: unless-stopped
   redis-commander:
     image: rediscommander/redis-commander:latest
@@ -38,8 +36,6 @@ services:
       - REDIS_HOSTS=redis
     ports:
       - "8082:8081"
-    networks:
-      - redis-network
     depends_on:
       - redis
   flyway:
@@ -102,7 +98,5 @@ volumes:
   redis:
   pg-sonarqube:
 networks:
-  redis-network:
-    driver: bridge
   sonar-network:
     driver: bridge
