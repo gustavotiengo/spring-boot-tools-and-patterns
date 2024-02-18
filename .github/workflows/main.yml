@@ -69,6 +69,7 @@ jobs:
         run: ls - R
 
   build:
+    needs: test
     runs-on: ubuntu-latest
 
     steps:
