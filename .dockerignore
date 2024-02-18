@@ -1,6 +1,5 @@
 **/*.md
 gradle
 .git
-.github
 .cache
 .gradle

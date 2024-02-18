@@ -65,9 +65,6 @@ jobs:
       - name: Publish Coverager Workflow Build Summary
         run: echo "${{ steps.jacoco_reporter.outputs.coverageSummary }}" >> $GITHUB_STEP_SUMMARY
 
-      - name: Report
-        run: ls - R
-
   build:
     needs: test
     runs-on: ubuntu-latest
