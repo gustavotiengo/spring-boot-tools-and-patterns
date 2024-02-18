@@ -96,6 +96,7 @@ sonar {
 		property "sonar.organization", "gustavotiengo"
 		property "sonar.host.url", "https://sonarcloud.io"
 		property 'sonar.jacoco.reportPaths', 'build/reports/jacoco/test/jacocoTestReport.xml'
+		property 'sonar.exclusions', 'com/gt/petcatalog/tables/*,com/gt/petcatalog/*.*'
 	}
 }
 
