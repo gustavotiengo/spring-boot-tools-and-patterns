@@ -83,14 +83,8 @@ jacocoTestReport {
 	afterEvaluate {
 		classDirectories.setFrom(files(classDirectories.files.collect {
 			fileTree(dir: it, exclude: [
-					"**/jooq/**/*",
-					"**/jooq/com/gt/petcatalog/**",
-					"src/main/jooq/com/gt/petcatalog/**",
-					"**/jooq/com/gt/petcatalog/tables/**",
-					"**/jooq/com/gt/petcatalog/tables/**",
-					"**/jooq/com/gt/petcatalog/tables/pojos/*.java",
-					"src/main/jooq/com/gt/petcatalog/tables/pojos/*.java",
-					"**/java/com/gt/petcatalog/PetCatalogApplication.java"
+					"com/gt/petcatalog/tables/*",
+					"com/gt/petcatalog/*.*"
 			])
 		}))
 	}
@@ -101,9 +95,9 @@ sonar {
 		property "sonar.projectKey", "gustavotiengo_petcatalog"
 		property "sonar.organization", "gustavotiengo"
 		property "sonar.host.url", "https://sonarcloud.io"
-		property 'sonar.exclusions', 'com/gt/petcatalog/tables/*,com/gt/petcatalog/*.*'
-		property 'sonar.coverage.exclusions', 'com/gt/petcatalog/tables/*,com/gt/petcatalog/*.*'
-		property 'sonar.coverage.jacoco.xmlReportPaths', 'build/reports/jacoco/test/jacocoTestReport.xml'
+		property 'sonar.exclusions', '**/jooq/com/gt/petcatalog/tables/pojos/*.java,**/jooq/com/gt/petcatalog/**,**/tables/**/*,**/PetCatalogApplication.java'
+		property 'sonar.coverage.exclusions', '**/jooq/com/gt/petcatalog/tables/pojos/*.java,**/jooq/com/gt/petcatalog/**,**/tables/**/*,**/PetCatalogApplication.java'
+		property 'sonar.coverage.jacoco.xmlReportPaths', '**/build/reports/jacoco/test/jacocoTestReport.xml'
 	}
 }
 
