@@ -29,7 +29,7 @@ jobs:
           gradle-version: 8.5
 
       - name: Cache Gradle packages
-        uses: actions/cache@v4
+        uses: 'actions/cache@v4'
         with:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
@@ -39,7 +39,7 @@ jobs:
         run: ./gradlew jacocoTestReport -x generateJooq
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v4
+        uses: 'actions/cache@v4'
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
