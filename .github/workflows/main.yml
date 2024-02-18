@@ -12,9 +12,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Run Coverage
+        run: ./gradlew jacocoTestReport -x generateJooq
+
+      - name: Upload Report
+        uses: 'actions/upload-artifact@v4'
+        with:
+          name: report.xml
+          path: ${{ github.workspace }}/build/reports/jacoco/test/jacocoTestReport.xml
+
       - name: JaCoCo Code Coverage Report
         id: jacoco_reporter
-        uses: PavanMudigonda/jacoco-reporter@v4.9
+        uses: 'PavanMudigonda/jacoco-reporter@v5.0'
         with:
           coverage_results_path:  ${{ github.workspace }}/build/reports/jacoco/test/jacocoTestReport.xml
           coverage_report_name: Coverage
@@ -25,6 +34,13 @@ jobs:
           fail_below_threshold: false
           publish_only_summary: true
 
+      - name: Upload Code Coverage Artifacts
+        uses: 'actions/upload-artifact@v4'
+        with:
+          name: code-coverage-report
+          path: "*/coverage-results.md"
+          retention-days: 1
+
       - name: Get the Coverage info
         run: |
           echo "Total coverage coverage-overall ${{ steps.jacoco.outputs.coverage-overall }}"
@@ -34,6 +50,9 @@ jobs:
 
       - name: Publish Coverager Workflow Build Summary
         run: echo "${{ steps.jacoco_reporter.outputs.coverageSummary }}" >> $GITHUB_STEP_SUMMARY
+
+      - name: Report
+        run: ls - R
 
   build:
     runs-on: ubuntu-latest
