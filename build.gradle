@@ -83,8 +83,9 @@ jacocoTestReport {
 	afterEvaluate {
 		classDirectories.setFrom(files(classDirectories.files.collect {
 			fileTree(dir: it, exclude: [
-					"com/gt/petcatalog/tables/*",
-					"com/gt/petcatalog/*.*"
+					"src/main/jooq/**/*",
+					"**/jooq/**",
+					"**/PetCatalogApplication.java"
 			])
 		}))
 	}
