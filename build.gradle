@@ -83,9 +83,14 @@ jacocoTestReport {
 	afterEvaluate {
 		classDirectories.setFrom(files(classDirectories.files.collect {
 			fileTree(dir: it, exclude: [
-					"src/main/jooq/**/*",
-					"**/jooq/**",
-					"**/PetCatalogApplication.java"
+					"**/jooq/**/*",
+					"**/jooq/com/gt/petcatalog/**",
+					"src/main/jooq/com/gt/petcatalog/**",
+					"**/jooq/com/gt/petcatalog/tables/**",
+					"**/jooq/com/gt/petcatalog/tables/**",
+					"**/jooq/com/gt/petcatalog/tables/pojos/*.java",
+					"src/main/jooq/com/gt/petcatalog/tables/pojos/*.java",
+					"**/java/com/gt/petcatalog/PetCatalogApplication.java"
 			])
 		}))
 	}
