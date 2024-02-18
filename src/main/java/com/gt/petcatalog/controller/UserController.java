@@ -2,13 +2,13 @@ package com.gt.petcatalog.controller;
 
 import com.gt.petcatalog.service.UserService;
 import com.gt.petcatalog.tables.pojos.Users;
+import jakarta.validation.constraints.NotBlank;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.MessageFormat;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,8 +25,8 @@ public class UserController {
     }
 
     @GetMapping("/{uuid}")
-    public ResponseEntity<Users> findByUuid(@PathVariable String uuid) {
-        logger.debug(MessageFormat.format("Find user {0}", uuid));
+    public ResponseEntity<Users> findByUuid(@PathVariable @NotBlank String uuid) {
+        logger.debug("Find user {}", uuid);
         return ResponseEntity.ok(userService.findByUuid(uuid));
     }
 
