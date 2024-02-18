@@ -131,6 +131,7 @@ jooq {
 					}
 					target {
 						packageName = 'com.gt.petcatalog'
+						directory = 'src/main/jooq'
 					}
 					strategy.name = 'org.jooq.codegen.DefaultGeneratorStrategy'
 				}
