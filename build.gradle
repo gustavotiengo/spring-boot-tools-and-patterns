@@ -43,6 +43,7 @@ dependencies {
 	implementation "org.springframework.boot:spring-boot-starter-jooq:$springVersion"
 	implementation "org.springframework.boot:spring-boot-starter-log4j2:$springVersion"
 	implementation "org.springframework.boot:spring-boot-starter-actuator:$springVersion"
+	implementation "org.springframework.boot:spring-boot-starter-validation:$springVersion"
 	implementation "org.springframework.boot:spring-boot-starter-data-redis:$springVersion"
 	implementation "io.micrometer:micrometer-registry-prometheus:$micrometerVersion"
 	implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:$springDocVersion"
