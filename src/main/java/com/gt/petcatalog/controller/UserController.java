@@ -1,5 +1,6 @@
 package com.gt.petcatalog.controller;
 
+import com.gt.petcatalog.Consts;
 import com.gt.petcatalog.service.UserService;
 import com.gt.petcatalog.tables.pojos.Users;
 import jakarta.validation.constraints.Pattern;
@@ -12,12 +13,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+
+
 @RestController
 @RequestMapping("users")
 public class UserController {
-
-    private static final String UUID_V4 =
-            "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-4[a-fA-F0-9]{3}-[89abAB][a-fA-F0-9]{3}-[a-fA-F0-9]{12}";
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -28,7 +28,7 @@ public class UserController {
     }
 
     @GetMapping("/{uuid}")
-    public ResponseEntity<Users> findByUuid(@PathVariable @Pattern(regexp = UUID_V4) String uuid) {
+    public ResponseEntity<Users> findByUuid(@PathVariable @Pattern(regexp = Consts.UUID_V4) String uuid) {
         logger.debug("Find user {}", uuid);
         Users user = userService.findByUuid(uuid);
         return user != null ? ResponseEntity.ok(userService.findByUuid(uuid)) : ResponseEntity.notFound().build();
