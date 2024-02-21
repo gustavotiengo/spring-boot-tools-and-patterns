@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
@@ -25,9 +26,10 @@ public class UserService {
     public UserService(final UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+
     @Cacheable(CacheNames.USERS)
+    @Transactional(readOnly = true)
     public List<Users> findAll() {
-        logger.debug("============ Fetch all users from Postres ============");
         try {
             return userRepository.findAll();
         } catch (Exception e) {
@@ -35,15 +37,13 @@ public class UserService {
         }
     }
 
+    @Transactional(readOnly = true)
     public Users findByUuid(String uuid) {
-        try {
-            return userRepository.findByUuid(uuid);
-        } catch (Exception e) {
-            return null;
-        }
+        return userRepository.findByUuid(uuid);
     }
 
     @CacheEvict(value = CacheNames.USERS, allEntries = true)
+    @Transactional
     public Optional<Users> save(Users user) {
         try {
             final Users persisted = userRepository.persist(user);

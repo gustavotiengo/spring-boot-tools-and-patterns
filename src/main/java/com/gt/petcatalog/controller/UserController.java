@@ -36,16 +36,11 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<List<Users>> findAll() {
-        logger.debug("List all users");
         return ResponseEntity.ok(userService.findAll());
     }
 
     @PostMapping
     public ResponseEntity<Users> save(@RequestBody final Users user) {
-        // get request information to log and audit
-        logger.debug("save request received");
-
-        // call save service
         final Optional<Users> saved = this.userService.save(user);
 
         // if saved is empty, return accepted because fallback process will be executed
@@ -54,7 +49,6 @@ public class UserController {
             return ResponseEntity.accepted().build();
         }
 
-        // return created when successfully service executed
         return ResponseEntity.status(HttpStatus.CREATED).body(saved.get());
     }
 

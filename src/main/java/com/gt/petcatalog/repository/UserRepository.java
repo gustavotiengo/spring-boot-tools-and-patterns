@@ -5,6 +5,7 @@ import com.gt.petcatalog.tables.records.UsersRecord;
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,12 +20,13 @@ public class UserRepository {
         this.dbContext = dbContext;
     }
 
-     public List<Users> findAll() {
+    public List<Users> findAll() {
          return dbContext.
                  select().
                  from(USERS).
                  fetchInto(Users.class);
     }
+
 
     public Users findByUuid(String uuid) {
         return dbContext.
@@ -40,7 +42,10 @@ public class UserRepository {
 
         if (user.getExternalId() == null) {
             userRecord.setExternalId(UUID.randomUUID());
+            userRecord.setCreatedAt(LocalDateTime.now());
         }
+
+        userRecord.setLastUpdate(LocalDateTime.now());
 
         int execution = dbContext.
                 insertInto(USERS).
