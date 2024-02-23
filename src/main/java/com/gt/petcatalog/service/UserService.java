@@ -3,8 +3,6 @@ package com.gt.petcatalog.service;
 import com.gt.petcatalog.cache.CacheNames;
 import com.gt.petcatalog.repository.UserRepository;
 import com.gt.petcatalog.tables.pojos.Users;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -17,8 +15,6 @@ import java.util.Optional;
 
 @Service
 public class UserService {
-
-    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     private final UserRepository userRepository;
 
@@ -50,6 +46,16 @@ public class UserService {
             return Optional.of(persisted);
         } catch (Exception e) {
             return Optional.empty();
+        }
+    }
+
+    @CacheEvict(value = CacheNames.USERS, allEntries = true)
+    @Transactional
+    public boolean delete(String uuid) {
+        try {
+            return userRepository.delete(uuid);
+        } catch (Exception e) {
+            return false;
         }
     }
 

@@ -21,10 +21,10 @@ public class UserRepository {
     }
 
     public List<Users> findAll() {
-         return dbContext.
-                 select().
-                 from(USERS).
-                 fetchInto(Users.class);
+        return dbContext.
+                select().
+                from(USERS).
+                fetchInto(Users.class);
     }
 
 
@@ -58,5 +58,14 @@ public class UserRepository {
         }
 
         return null;
+    }
+
+    public boolean delete(String uuid) {
+        int execution = dbContext.
+                deleteFrom(USERS).
+                where(USERS.EXTERNAL_ID.eq(UUID.fromString(uuid))).
+                execute();
+
+        return execution == 1;
     }
 }

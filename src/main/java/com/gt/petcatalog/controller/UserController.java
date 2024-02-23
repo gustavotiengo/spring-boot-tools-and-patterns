@@ -52,5 +52,13 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(saved.get());
     }
 
+    @DeleteMapping("/{uuid}")
+    public ResponseEntity<String> delete(@PathVariable @Pattern(regexp = Consts.UUID_V4) String uuid) {
+        if (userService.delete(uuid)) {
+            return ResponseEntity.ok().build();
+        }
+
+        return ResponseEntity.notFound().build();
+    }
 
 }
