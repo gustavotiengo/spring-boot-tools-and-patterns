@@ -23,7 +23,7 @@ public class UserController {
 
     private final UserService userService;
 
-    public UserController(UserService userService) {
+    public UserController(final UserService userService) {
         this.userService = userService;
     }
 
@@ -55,7 +55,7 @@ public class UserController {
     @DeleteMapping("/{uuid}")
     public ResponseEntity<String> delete(@PathVariable @Pattern(regexp = Consts.UUID_V4) String uuid) {
         if (userService.delete(uuid)) {
-            return ResponseEntity.ok().build();
+            return ResponseEntity.noContent().build();
         }
 
         return ResponseEntity.notFound().build();

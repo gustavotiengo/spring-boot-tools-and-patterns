@@ -3,7 +3,6 @@ package com.gt.petcatalog.service;
 import com.gt.petcatalog.cache.CacheNames;
 import com.gt.petcatalog.repository.UserRepository;
 import com.gt.petcatalog.tables.pojos.Users;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -18,7 +17,6 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    @Autowired
     public UserService(final UserRepository userRepository) {
         this.userRepository = userRepository;
     }
