@@ -1,6 +1,7 @@
 package com.gt.petcatalog.controller;
 
 import com.gt.petcatalog.Consts;
+import com.gt.petcatalog.CustomResponse;
 import com.gt.petcatalog.service.UserService;
 import com.gt.petcatalog.tables.pojos.Users;
 import jakarta.validation.constraints.Pattern;
@@ -53,12 +54,13 @@ public class UserController {
     }
 
     @DeleteMapping("/{uuid}")
-    public ResponseEntity<String> delete(@PathVariable @Pattern(regexp = Consts.UUID_V4) String uuid) {
+    public ResponseEntity<Object> delete(@PathVariable @Pattern(regexp = Consts.UUID_V4) String uuid) {
         if (userService.delete(uuid)) {
             return ResponseEntity.noContent().build();
         }
 
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).
+                body(new CustomResponse(HttpStatus.NOT_FOUND.value(), "Resource not found"));
     }
 
 }
