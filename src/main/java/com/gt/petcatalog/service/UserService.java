@@ -49,12 +49,11 @@ public class UserService {
 
     @CacheEvict(value = CacheNames.USERS, allEntries = true)
     @Transactional
-    public boolean delete(String uuid) {
-        try {
-            return userRepository.delete(uuid);
-        } catch (Exception e) {
-            return false;
+    public void delete(String uuid) throws RuntimeException {
+        if (!userRepository.delete(uuid)) {
+            throw new RuntimeException("NOT DELETED");
         }
+
     }
 
 }
