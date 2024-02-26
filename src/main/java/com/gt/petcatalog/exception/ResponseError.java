@@ -1,4 +1,4 @@
-package com.gt.petcatalog;
+package com.gt.petcatalog.exception;
 
 import org.springframework.http.HttpStatus;
 
