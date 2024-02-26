@@ -6,7 +6,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info,prometheus,liveness,readiness
+        include: health,info,prometheus,liveness,readiness,metrics
   endpoint:
     health:
       show-details: always

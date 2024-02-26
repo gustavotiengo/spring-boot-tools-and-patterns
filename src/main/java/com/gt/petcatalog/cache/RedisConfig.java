@@ -36,7 +36,7 @@ public class RedisConfig {
         return builder -> {
             var usersConf = RedisCacheConfiguration.defaultCacheConfig()
                     .entryTtl(Duration.ofMinutes(usersEntryTtl));
-            builder.withCacheConfiguration(CacheNames.USERS, usersConf);
+            builder.withCacheConfiguration(CacheNames.USERS, usersConf).enableStatistics();
         };
     }
 

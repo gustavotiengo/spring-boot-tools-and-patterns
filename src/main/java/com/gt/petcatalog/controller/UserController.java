@@ -43,7 +43,6 @@ public class UserController {
     public ResponseEntity<User> save(@RequestBody @Valid final User user) {
         final Optional<User> saved = userService.save(user);
 
-        // if saved is empty, return accepted because fallback process will be executed
         if (saved.isEmpty()) {
             logger.error("TO-DO FALLBACK");
             return ResponseEntity.accepted().build();
