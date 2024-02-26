@@ -208,25 +208,4 @@ public class FlywaySchemaHistoryRecord extends UpdatableRecordImpl<FlywaySchemaH
         setSuccess(success);
         resetChangedOnNotNull();
     }
-
-    /**
-     * Create a detached, initialised FlywaySchemaHistoryRecord
-     */
-    public FlywaySchemaHistoryRecord(com.gt.petcatalog.tables.pojos.FlywaySchemaHistory value) {
-        super(FlywaySchemaHistory.FLYWAY_SCHEMA_HISTORY);
-
-        if (value != null) {
-            setInstalledRank(value.getInstalledRank());
-            setVersion(value.getVersion());
-            setDescription(value.getDescription());
-            setType(value.getType());
-            setScript(value.getScript());
-            setChecksum(value.getChecksum());
-            setInstalledBy(value.getInstalledBy());
-            setInstalledOn(value.getInstalledOn());
-            setExecutionTime(value.getExecutionTime());
-            setSuccess(value.getSuccess());
-            resetChangedOnNotNull();
-        }
-    }
 }

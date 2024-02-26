@@ -1,8 +1,9 @@
 package com.gt.petcatalog.controller;
 
 import com.gt.petcatalog.Constants;
+import com.gt.petcatalog.dto.User;
 import com.gt.petcatalog.service.UserService;
-import com.gt.petcatalog.tables.pojos.Users;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-
 
 
 @RestController
@@ -28,20 +28,20 @@ public class UserController {
     }
 
     @GetMapping("/{uuid}")
-    public ResponseEntity<Users> findByUuid(@PathVariable @Pattern(regexp = Constants.UUID_V4) String uuid) {
+    public ResponseEntity<User> findByUuid(@PathVariable @Pattern(regexp = Constants.UUID_V4) String uuid) {
         logger.debug("Find user {}", uuid);
-        Users user = userService.findByUuid(uuid);
+        final User user = userService.findByUuid(uuid);
         return ResponseEntity.ok(user);
     }
 
     @GetMapping
-    public ResponseEntity<List<Users>> findAll() {
+    public ResponseEntity<List<User>> findAll() {
         return ResponseEntity.ok(userService.findAll());
     }
 
     @PostMapping
-    public ResponseEntity<Users> save(@RequestBody final Users user) {
-        final Optional<Users> saved = this.userService.save(user);
+    public ResponseEntity<User> save(@RequestBody @Valid final User user) {
+        final Optional<User> saved = userService.save(user);
 
         // if saved is empty, return accepted because fallback process will be executed
         if (saved.isEmpty()) {

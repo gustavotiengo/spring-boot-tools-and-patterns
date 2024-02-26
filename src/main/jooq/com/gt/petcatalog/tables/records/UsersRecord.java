@@ -225,26 +225,4 @@ public class UsersRecord extends UpdatableRecordImpl<UsersRecord> {
         setLastUpdate(lastUpdate);
         resetChangedOnNotNull();
     }
-
-    /**
-     * Create a detached, initialised UsersRecord
-     */
-    public UsersRecord(com.gt.petcatalog.tables.pojos.Users value) {
-        super(Users.USERS);
-
-        if (value != null) {
-            setId(value.getId());
-            setExternalId(value.getExternalId());
-            setName(value.getName());
-            setPhone(value.getPhone());
-            setEmail(value.getEmail());
-            setAddress(value.getAddress());
-            setRegion(value.getRegion());
-            setCity(value.getCity());
-            setState(value.getState());
-            setCreatedAt(value.getCreatedAt());
-            setLastUpdate(value.getLastUpdate());
-            resetChangedOnNotNull();
-        }
-    }
 }

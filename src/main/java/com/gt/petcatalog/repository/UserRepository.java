@@ -1,11 +1,10 @@
 package com.gt.petcatalog.repository;
 
-import com.gt.petcatalog.tables.pojos.Users;
+import com.gt.petcatalog.dto.User;
 import com.gt.petcatalog.tables.records.UsersRecord;
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,44 +19,31 @@ public class UserRepository {
         this.dbContext = dbContext;
     }
 
-    public List<Users> findAll() {
+    public List<User> findAll() {
         return dbContext.
                 select().
                 from(USERS).
-                fetchInto(Users.class);
+                fetchInto(User.class);
     }
 
 
-    public Users findByUuid(String uuid) {
+    public User findByUuid(String uuid) {
         return dbContext.
                 select().
                 from(USERS).
                 where(USERS.EXTERNAL_ID.eq(UUID.fromString(uuid))).
                 limit(1).
-                fetchOneInto(Users.class);
+                fetchOneInto(User.class);
     }
 
-    public Users persist(Users user) {
-        UsersRecord userRecord = new UsersRecord(user);
-
-        if (user.getExternalId() == null) {
-            userRecord.setExternalId(UUID.randomUUID());
-            userRecord.setCreatedAt(LocalDateTime.now());
-        }
-
-        userRecord.setLastUpdate(LocalDateTime.now());
-
+    public boolean persist(UsersRecord user) {
         int execution = dbContext.
                 insertInto(USERS).
-                set(userRecord).
+                set(user).
                 onDuplicateKeyUpdate().
-                set(userRecord).execute();
+                set(user).execute();
 
-        if (execution == 1) {
-            return user;
-        }
-
-        return null;
+        return execution == 1;
     }
 
     public boolean delete(String uuid) {
