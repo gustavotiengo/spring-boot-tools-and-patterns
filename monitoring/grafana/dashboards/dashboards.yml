@@ -43,7 +43,7 @@
   "fiscalYearStartMonth": 0,
   "gnetId": 4701,
   "graphTooltip": 0,
-  "id": 2,
+  "id": 1,
   "links": [],
   "liveNow": true,
   "panels": [
@@ -127,7 +127,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 9,
+        "h": 8,
         "w": 24,
         "x": 0,
         "y": 1
@@ -170,6 +170,106 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unitScale": true
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 9
+      },
+      "id": 129,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "expr": "cache_gets_total{result=\"hit\"}",
+          "fullMetaSearch": false,
+          "includeNullMetadata": true,
+          "instant": false,
+          "legendFormat": "{{cache}} hits",
+          "range": true,
+          "refId": "A",
+          "useBackend": false
+        }
+      ],
+      "title": "Cache Hits",
+      "type": "timeseries"
+    },
+    {
       "collapsed": false,
       "datasource": {
         "type": "prometheus",
@@ -179,7 +279,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 10
+        "y": 16
       },
       "id": 127,
       "panels": [],
@@ -252,7 +352,7 @@
         "h": 10,
         "w": 6,
         "x": 0,
-        "y": 11
+        "y": 17
       },
       "id": 24,
       "links": [],
@@ -386,7 +486,7 @@
         "h": 10,
         "w": 6,
         "x": 6,
-        "y": 11
+        "y": 17
       },
       "id": 25,
       "links": [],
@@ -521,7 +621,7 @@
         "h": 10,
         "w": 12,
         "x": 12,
-        "y": 11
+        "y": 17
       },
       "id": 26,
       "links": [],
@@ -599,7 +699,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 21
+        "y": 27
       },
       "id": 128,
       "panels": [],
@@ -674,7 +774,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 22
+        "y": 28
       },
       "id": 106,
       "links": [],
@@ -884,7 +984,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 22
+        "y": 28
       },
       "id": 91,
       "links": [],
@@ -933,7 +1033,7 @@
     "list": []
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {
@@ -964,6 +1064,6 @@
   "timezone": "browser",
   "title": "Template Prometheus Metrics",
   "uid": "kf7JZnAVk",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }
