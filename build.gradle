@@ -25,7 +25,7 @@ configurations {
 
 ext {
 	springVersion = "3.2.2"
-	postgresVersion = "42.6.0"
+	postgresVersion = "42.7.2"
 	micrometerVersion = "1.12.3"
 	springDocVersion = "2.3.0"
 }
