@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS users (
+CREATE TABLE IF NOT EXISTS "user" (
 	id serial4 NOT NULL,
 	external_id uuid NOT NULL,
 	"name" text NULL,

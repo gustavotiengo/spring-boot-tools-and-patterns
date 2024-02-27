@@ -5,9 +5,9 @@ package com.gt.springtools;
 
 
 import com.gt.springtools.tables.FlywaySchemaHistory;
-import com.gt.springtools.tables.Users;
+import com.gt.springtools.tables.User;
 import com.gt.springtools.tables.records.FlywaySchemaHistoryRecord;
-import com.gt.springtools.tables.records.UsersRecord;
+import com.gt.springtools.tables.records.UserRecord;
 
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
@@ -27,6 +27,6 @@ public class Keys {
     // -------------------------------------------------------------------------
 
     public static final UniqueKey<FlywaySchemaHistoryRecord> FLYWAY_SCHEMA_HISTORY_PK = Internal.createUniqueKey(FlywaySchemaHistory.FLYWAY_SCHEMA_HISTORY, DSL.name("flyway_schema_history_pk"), new TableField[] { FlywaySchemaHistory.FLYWAY_SCHEMA_HISTORY.INSTALLED_RANK }, true);
-    public static final UniqueKey<UsersRecord> USERS_EXTERNAL_ID_KEY = Internal.createUniqueKey(Users.USERS, DSL.name("users_external_id_key"), new TableField[] { Users.USERS.EXTERNAL_ID }, true);
-    public static final UniqueKey<UsersRecord> USERS_PKEY = Internal.createUniqueKey(Users.USERS, DSL.name("users_pkey"), new TableField[] { Users.USERS.ID }, true);
+    public static final UniqueKey<UserRecord> USERS_EXTERNAL_ID_KEY = Internal.createUniqueKey(User.USER, DSL.name("users_external_id_key"), new TableField[] { User.USER.EXTERNAL_ID }, true);
+    public static final UniqueKey<UserRecord> USERS_PKEY = Internal.createUniqueKey(User.USER, DSL.name("users_pkey"), new TableField[] { User.USER.ID }, true);
 }

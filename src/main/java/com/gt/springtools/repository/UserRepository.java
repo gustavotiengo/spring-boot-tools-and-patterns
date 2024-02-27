@@ -1,14 +1,14 @@
 package com.gt.springtools.repository;
 
 import com.gt.springtools.dto.User;
-import com.gt.springtools.tables.records.UsersRecord;
+import com.gt.springtools.tables.records.UserRecord;
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.UUID;
 
-import static com.gt.springtools.Tables.USERS;
+import static com.gt.springtools.Tables.USER;
 
 @Repository
 public class UserRepository {
@@ -22,7 +22,7 @@ public class UserRepository {
     public List<User> findAll() {
         return dbContext.
                 select().
-                from(USERS).
+                from(USER).
                 fetchInto(User.class);
     }
 
@@ -30,15 +30,15 @@ public class UserRepository {
     public User findByUuid(String uuid) {
         return dbContext.
                 select().
-                from(USERS).
-                where(USERS.EXTERNAL_ID.eq(UUID.fromString(uuid))).
+                from(USER).
+                where(USER.EXTERNAL_ID.eq(UUID.fromString(uuid))).
                 limit(1).
                 fetchOneInto(User.class);
     }
 
-    public boolean persist(UsersRecord user) {
+    public boolean persist(UserRecord user) {
         int execution = dbContext.
-                insertInto(USERS).
+                insertInto(USER).
                 set(user).
                 onDuplicateKeyUpdate().
                 set(user).execute();
@@ -48,8 +48,8 @@ public class UserRepository {
 
     public boolean delete(String uuid) {
         int execution = dbContext.
-                deleteFrom(USERS).
-                where(USERS.EXTERNAL_ID.eq(UUID.fromString(uuid))).
+                deleteFrom(USER).
+                where(USER.EXTERNAL_ID.eq(UUID.fromString(uuid))).
                 execute();
 
         return execution == 1;

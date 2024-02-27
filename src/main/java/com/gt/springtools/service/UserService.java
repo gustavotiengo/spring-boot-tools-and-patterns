@@ -4,7 +4,7 @@ import com.gt.springtools.cache.CacheNames;
 import com.gt.springtools.dto.User;
 import com.gt.springtools.exception.EntityNotFoundException;
 import com.gt.springtools.repository.UserRepository;
-import com.gt.springtools.tables.records.UsersRecord;
+import com.gt.springtools.tables.records.UserRecord;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static com.gt.springtools.Tables.USERS;
+import static com.gt.springtools.Tables.USER;
 
 @Service
 public class UserService {
@@ -46,14 +46,14 @@ public class UserService {
     @CacheEvict(value = CacheNames.USERS, allEntries = true)
     @Transactional
     public Optional<User> save(User user) throws RuntimeException {
-        UsersRecord userRecord = new UsersRecord();
+        UserRecord userRecord = new UserRecord();
         userRecord.from(user);
 
         if (user.getExternalId() == null) {
             userRecord.setExternalId(UUID.randomUUID());
             userRecord.setCreatedAt(LocalDateTime.now());
         } else {
-            userRecord.reset(USERS.CREATED_AT);
+            userRecord.reset(USER.CREATED_AT);
             userRecord.setLastUpdate(LocalDateTime.now());
         }
 

@@ -5,7 +5,7 @@ package com.gt.springtools;
 
 
 import com.gt.springtools.tables.FlywaySchemaHistory;
-import com.gt.springtools.tables.Users;
+import com.gt.springtools.tables.User;
 
 import java.util.Arrays;
 import java.util.List;
@@ -34,9 +34,9 @@ public class Public extends SchemaImpl {
     public final FlywaySchemaHistory FLYWAY_SCHEMA_HISTORY = FlywaySchemaHistory.FLYWAY_SCHEMA_HISTORY;
 
     /**
-     * The table <code>public.users</code>.
+     * The table <code>public.user</code>.
      */
-    public final Users USERS = Users.USERS;
+    public final User USER = User.USER;
 
     /**
      * No further instances allowed
@@ -55,7 +55,7 @@ public class Public extends SchemaImpl {
     public final List<Table<?>> getTables() {
         return Arrays.asList(
             FlywaySchemaHistory.FLYWAY_SCHEMA_HISTORY,
-            Users.USERS
+            User.USER
         );
     }
 }

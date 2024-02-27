@@ -5,7 +5,7 @@ package com.gt.springtools;
 
 
 import com.gt.springtools.tables.FlywaySchemaHistory;
-import com.gt.springtools.tables.Users;
+import com.gt.springtools.tables.User;
 
 
 /**
@@ -20,7 +20,7 @@ public class Tables {
     public static final FlywaySchemaHistory FLYWAY_SCHEMA_HISTORY = FlywaySchemaHistory.FLYWAY_SCHEMA_HISTORY;
 
     /**
-     * The table <code>public.users</code>.
+     * The table <code>public.user</code>.
      */
-    public static final Users USERS = Users.USERS;
+    public static final User USER = User.USER;
 }
