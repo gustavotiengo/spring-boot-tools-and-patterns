@@ -5,7 +5,9 @@ import com.gt.springtools.tables.records.UserRecord;
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static com.gt.springtools.Tables.USER;
@@ -20,28 +22,34 @@ public class UserRepository {
     }
 
     public List<User> findAll() {
-        return dbContext.
-                select().
-                from(USER).
-                fetchInto(User.class);
+        return dbContext.select().from(USER).fetchInto(User.class);
     }
 
-
-    public User findByUuid(String uuid) {
-        return dbContext.
-                select().
-                from(USER).
-                where(USER.EXTERNAL_ID.eq(UUID.fromString(uuid))).
-                limit(1).
-                fetchOneInto(User.class);
+    public Optional<User> findByUuid(String uuid) {
+        return Optional.ofNullable(dbContext.select()
+                .from(USER)
+                .where(USER.EXTERNAL_ID.eq(UUID.fromString(uuid)))
+                .limit(1)
+                .fetchOneInto(User.class));
     }
 
-    public boolean persist(UserRecord user) {
-        int execution = dbContext.
-                insertInto(USER).
-                set(user).
-                onDuplicateKeyUpdate().
-                set(user).execute();
+    public boolean insert(UserRecord user) {
+        int execution = dbContext.insertInto(USER)
+                .set(user)
+                .set(USER.CREATED_AT, LocalDateTime.now())
+                .set(USER.LAST_UPDATE, LocalDateTime.now())
+                .execute();
+        return execution == 1;
+    }
+
+    public boolean update(UserRecord user) {
+        user.reset(USER.CREATED_AT);
+
+        int execution = dbContext.update(USER)
+                .set(user)
+                .set(USER.LAST_UPDATE, LocalDateTime.now())
+                .where(USER.EXTERNAL_ID.eq(user.getExternalId()))
+                .execute();
 
         return execution == 1;
     }

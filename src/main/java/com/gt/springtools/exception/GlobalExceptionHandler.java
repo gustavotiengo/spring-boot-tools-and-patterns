@@ -3,6 +3,7 @@ package com.gt.springtools.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.FieldError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -12,6 +13,7 @@ import org.springframework.web.method.annotation.HandlerMethodValidationExceptio
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestControllerAdvice
@@ -60,6 +62,15 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<ResponseError> handleValidationErrors(HandlerMethodValidationException e) {
         ResponseError response = new ResponseError(HttpStatus.BAD_REQUEST, e.getReason());
+        response.setErrors(new ArrayList<>());
+
+        e.getAllValidationResults().forEach(validation -> validation.getResolvableErrors().forEach(resolvableError -> {
+            if (resolvableError instanceof FieldError fieldError) {
+                response.getErrors()
+                        .add(MessageFormat.format("{0}: {1}", fieldError.getField(), fieldError.getDefaultMessage()));
+            }
+        }));
+
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 

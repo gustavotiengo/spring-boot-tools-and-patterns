@@ -7,17 +7,21 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
+import java.text.MessageFormat;
 import java.util.List;
-import java.util.Optional;
+
+import static com.gt.springtools.controller.UserController.USERS;
 
 
 @RestController
-@RequestMapping("users")
+@RequestMapping(USERS)
 public class UserController {
+
+    static final String USERS = "users";
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -27,6 +31,19 @@ public class UserController {
         this.userService = userService;
     }
 
+    @GetMapping
+    public ResponseEntity<List<User>> findAll() {
+        return ResponseEntity.ok(userService.findAll());
+    }
+
+    @PostMapping
+    public ResponseEntity<User> create(@RequestBody @Valid final User user) {
+        final User createdUser = userService.save(user, null);
+        return ResponseEntity
+                .created(URI.create(MessageFormat.format("/{0}/{1}", USERS, createdUser.getExternalId())))
+                .body(createdUser);
+    }
+
     @GetMapping("/{uuid}")
     public ResponseEntity<User> findByUuid(@PathVariable @Pattern(regexp = Constants.UUID_V4) String uuid) {
         logger.debug("Find user {}", uuid);
@@ -34,21 +51,11 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
-    @GetMapping
-    public ResponseEntity<List<User>> findAll() {
-        return ResponseEntity.ok(userService.findAll());
-    }
-
-    @PostMapping
-    public ResponseEntity<User> save(@RequestBody @Valid final User user) {
-        final Optional<User> saved = userService.save(user);
-
-        if (saved.isEmpty()) {
-            logger.error("TO-DO FALLBACK");
-            return ResponseEntity.accepted().build();
-        }
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(saved.get());
+    @PutMapping("/{uuid}")
+    public ResponseEntity<User> update(@PathVariable @Pattern(regexp = Constants.UUID_V4) String uuid,
+                                       @RequestBody @Valid final User user) {
+        final User updatedUser = userService.save(user, uuid);
+        return ResponseEntity.ok(updatedUser);
     }
 
     @DeleteMapping("/{uuid}")

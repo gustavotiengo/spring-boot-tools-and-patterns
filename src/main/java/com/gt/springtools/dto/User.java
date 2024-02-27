@@ -6,6 +6,7 @@ package com.gt.springtools.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.gt.springtools.Constants;
+import com.gt.springtools.tables.records.UserRecord;
 import jakarta.validation.constraints.*;
 
 import java.beans.ConstructorProperties;
@@ -20,6 +21,7 @@ public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Pattern(regexp = Constants.UUID_V4)
+    @Null
     private final String externalId;
     @NotNull
     @NotBlank
@@ -31,13 +33,22 @@ public class User implements Serializable {
     @NotNull
     @NotBlank
     private final String email;
+    @Size(min = 5)
     private final String address;
+    @NotNull
+    @NotBlank
     private final String region;
+    @NotNull
+    @NotBlank
     private final String city;
+    @NotNull
+    @NotBlank
     @Size(min = 2, max = 2)
     private final String state;
+    @Null
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private final LocalDateTime createdAt;
+    @Null
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private final LocalDateTime lastUpdate;
 
@@ -65,6 +76,19 @@ public class User implements Serializable {
         this.state = state;
         this.createdAt = createdAt;
         this.lastUpdate = lastUpdate;
+    }
+
+    public User(UserRecord userRecord) {
+        this.externalId = String.valueOf(userRecord.getExternalId());
+        this.name = userRecord.getName();
+        this.phone = userRecord.getPhone();
+        this.email = userRecord.getEmail();
+        this.address = userRecord.getAddress();
+        this.region = userRecord.getRegion();
+        this.city = userRecord.getCity();
+        this.state = userRecord.getState();
+        this.createdAt = userRecord.getCreatedAt();
+        this.lastUpdate = userRecord.getLastUpdate();
     }
 
     /**
