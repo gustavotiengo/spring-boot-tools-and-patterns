@@ -16,7 +16,7 @@ management:
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/petcatalog
+    url: jdbc:postgresql://localhost:5432/springtools
     password: admin
     username: admin
   data:
@@ -33,7 +33,7 @@ logging:
   level:
     root: ERROR
     org.springframework.boot: ERROR
-    com.gt.petcatalog: DEBUG
+    com.gt.springtools: DEBUG
 cache:
   config:
     entryTtl: 60

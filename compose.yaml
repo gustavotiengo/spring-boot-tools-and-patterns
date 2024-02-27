@@ -14,7 +14,7 @@ services:
   postgres:
     image: 'postgres:15.1-alpine'
     environment:
-      - "POSTGRES_DB=petcatalog"
+      - "POSTGRES_DB=springtools"
       - "POSTGRES_PASSWORD=admin"
       - "POSTGRES_USER=admin"
     ports:
@@ -42,7 +42,7 @@ services:
     image: flyway/flyway:9.22.3-alpine
     environment:
       - FLYWAY_EDITION=community
-    command: -url=jdbc:postgresql://postgres:5432/petcatalog -schemas=public -user=admin -password=admin -connectRetries=3 migrate
+    command: -url=jdbc:postgresql://postgres:5432/springtools -schemas=public -user=admin -password=admin -connectRetries=3 migrate
     volumes:
       - ./src/main/resources/db/migration:/flyway/sql/
     depends_on:

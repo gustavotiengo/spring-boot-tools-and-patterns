@@ -20,13 +20,13 @@ spec:
         kompose.cmd: kompose -f compose-test.yaml convert
         kompose.version: 1.32.0 (765fde254)
       labels:
-        io.kompose.network/petcatalog-default: "true"
+        io.kompose.network/springtools-default: "true"
         io.kompose.service: postgres
     spec:
       containers:
         - env:
             - name: POSTGRES_DB
-              value: petcatalog
+              value: springtools
             - name: POSTGRES_PASSWORD
               value: admin
             - name: POSTGRES_USER

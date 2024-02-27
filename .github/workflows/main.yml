@@ -99,5 +99,5 @@ jobs:
       with:
         context: .
         push: true
-        tags: gustavotiengo/petcatalog:latest
+        tags: gustavotiengo/springtools:latest
 
