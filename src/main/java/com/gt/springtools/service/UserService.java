@@ -47,11 +47,14 @@ public class UserService {
         if (Optional.ofNullable(uuid).isPresent()) {
             userRecord.setExternalId(UUID.fromString(uuid));
             if (!userRepository.update(userRecord)) {
-                throw new EntityPersistenceException("Error updating user");
+                throw new EntityPersistenceException(
+                        MessageFormat.format("User {0} cannot be updated or does not exist", uuid));
             }
         } else {
-            userRecord.setExternalId(UUID.randomUUID());
-            if (!userRepository.insert(userRecord)) {
+            UUID newUserUUID = userRepository.insert(userRecord);
+            if (Optional.ofNullable(newUserUUID).isPresent()) {
+                userRecord.setExternalId(newUserUUID);
+            } else {
                 throw new EntityPersistenceException("Error creating user");
             }
         }

@@ -15,6 +15,8 @@ import static com.gt.springtools.Tables.USER;
 @Repository
 public class UserRepository {
 
+    private static final int QUERY_HARD_LIMIT = 1000;
+
     private final DSLContext dbContext;
 
     public UserRepository(final DSLContext dbContext) {
@@ -22,7 +24,7 @@ public class UserRepository {
     }
 
     public List<User> findAll() {
-        return dbContext.select().from(USER).fetchInto(User.class);
+        return dbContext.select().from(USER).limit(QUERY_HARD_LIMIT).fetchInto(User.class);
     }
 
     public Optional<User> findByUuid(String uuid) {
@@ -33,13 +35,13 @@ public class UserRepository {
                 .fetchOneInto(User.class));
     }
 
-    public boolean insert(UserRecord user) {
-        int execution = dbContext.insertInto(USER)
+    public UUID insert(UserRecord user) {
+        return dbContext.insertInto(USER)
                 .set(user)
                 .set(USER.CREATED_AT, LocalDateTime.now())
                 .set(USER.LAST_UPDATE, LocalDateTime.now())
-                .execute();
-        return execution == 1;
+                .returningResult(USER.EXTERNAL_ID)
+                .fetchOneInto(UUID.class);
     }
 
     public boolean update(UserRecord user) {
