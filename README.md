@@ -48,6 +48,16 @@ in the `com.gt.springtools.SpringToolsApplication` class from your IDE. Alternat
 ```
 After running the `build` and `bootRun` Gradle tasks you should be able to access the app on _http://localhost:8080/_
 
-## 3. Copyright
-
+## 3. API Docs
+### 3.1 Available Endpoints
+To-Do
+### 3.2 Postman Collection
+To-Do
+## 4. Metrics, Monitoring & Tracing
+To-Do
+## 5. Quality: Code Coverage & Quality Gates
+To-Do
+## 6. On the way for _production_
+To-Do
+## 7. Copyright
 Released under the Apache License 2.0. See the [LICENSE](https://github.com/codecentric/springboot-sample-app/blob/master/LICENSE) file.
