@@ -59,5 +59,9 @@ To-Do
 To-Do
 ## 6. On the way for _production_
 To-Do
+### 6.1 Application Profiles
+To-Do
+### 6.2 Github Action Workflow
+To-Do
 ## 7. Copyright
 Released under the Apache License 2.0. See the [LICENSE](https://github.com/codecentric/springboot-sample-app/blob/master/LICENSE) file.
