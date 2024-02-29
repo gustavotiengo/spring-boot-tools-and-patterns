@@ -30,9 +30,9 @@ logging:
   level:
     root: ERROR
     org.springframework.boot: ERROR
-    com.gt.springtools: DEBUG
+    com.gt.springtools: INFO
 cache:
   config:
-    entryTtl: 10
+    entryTtl: 30
     users:
-      entryTtl: 5
+      entryTtl: 15

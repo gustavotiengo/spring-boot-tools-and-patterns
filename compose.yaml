@@ -5,6 +5,8 @@ services:
     build:
       dockerfile: Dockerfile
       context: .
+      args:
+        - PROFILE=prod
     depends_on:
       - postgres
       - redis

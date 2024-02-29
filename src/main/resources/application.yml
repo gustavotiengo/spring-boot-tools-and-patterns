@@ -6,7 +6,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info,prometheus,liveness,readiness,metrics
+        include: health
   endpoint:
     health:
       show-details: always
@@ -26,9 +26,6 @@ spring:
   cache:
     type: redis
     cache-names: users
-  output:
-    ansi:
-      enabled: ALWAYS
 logging:
   level:
     root: ERROR
@@ -36,6 +33,6 @@ logging:
     com.gt.springtools: DEBUG
 cache:
   config:
-    entryTtl: 60
+    entryTtl: 1
     users:
-      entryTtl: 30
+      entryTtl: 1

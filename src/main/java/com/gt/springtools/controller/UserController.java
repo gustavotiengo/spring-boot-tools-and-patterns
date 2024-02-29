@@ -47,6 +47,7 @@ public class UserController {
     @GetMapping("/{uuid}")
     public ResponseEntity<User> findByUuid(@PathVariable @Pattern(regexp = Constants.UUID_V4) String uuid) {
         logger.debug("Find user {}", uuid);
+        logger.info("Find user {}", uuid);
         final User user = userService.findByUuid(uuid);
         return ResponseEntity.ok(user);
     }
