@@ -48,10 +48,18 @@ in the `com.gt.springtools.SpringToolsApplication` class from your IDE. Alternat
 ```
 After running the `build` and `bootRun` Gradle tasks you should be able to access the app on _http://localhost:8080/_
 
-## 3. API Docs
+If you prefer to run everything using containers, you should use Docker Compose to run the Spring app within a 
+local container. To do that, just run:
+```shell
+docker-compose up app
+```
+- For debbuging code purposes it's preferable using _Intellij_ to execute `bootRun` task on debug mode.
+- You could install _Docker_ plugin for _Intellij_ for easier running and monitoring containers, whether using _compose_ 
+  or not.
+## 3. REST API
 ### 3.1 Available Endpoints
 To-Do
-### 3.2 Postman Collection
+### 3.2 Swagger
 To-Do
 ## 4. Metrics, Monitoring & Tracing
 To-Do
@@ -61,7 +69,7 @@ To-Do
 To-Do
 ### 6.1 Application Profiles
 To-Do
-### 6.2 Github Action Workflow
+### 6.2 GitHub Actions Workflow
 To-Do
 ## 7. Copyright
 Released under the Apache License 2.0. See the [LICENSE](https://github.com/codecentric/springboot-sample-app/blob/master/LICENSE) file.
