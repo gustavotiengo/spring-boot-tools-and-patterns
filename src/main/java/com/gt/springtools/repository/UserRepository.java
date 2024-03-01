@@ -44,7 +44,7 @@ public class UserRepository {
                 .fetchOneInto(UUID.class);
     }
 
-    public boolean update(UserRecord user) {
+    public Boolean update(UserRecord user) {
         user.reset(USER.CREATED_AT);
 
         int execution = dbContext.update(USER)
@@ -56,7 +56,7 @@ public class UserRepository {
         return execution == 1;
     }
 
-    public boolean delete(String uuid) {
+    public Boolean delete(String uuid) {
         int execution = dbContext.
                 deleteFrom(USER).
                 where(USER.EXTERNAL_ID.eq(UUID.fromString(uuid))).
