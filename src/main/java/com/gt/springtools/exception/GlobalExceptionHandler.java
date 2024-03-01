@@ -28,21 +28,21 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
-    public ResponseEntity<ResponseError> handleValidationErrors(HttpRequestMethodNotSupportedException e) {
+    public ResponseEntity<ResponseError> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
         ResponseError response = new ResponseError(HttpStatus.METHOD_NOT_ALLOWED, e.getMessage());
         return new ResponseEntity<>(response, HttpStatus.METHOD_NOT_ALLOWED);
     }
 
     @ExceptionHandler(EntityPersistenceException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<ResponseError> handleValidationErrors(EntityPersistenceException e) {
+    public ResponseEntity<ResponseError> handleEntityPersistenceException(EntityPersistenceException e) {
         ResponseError response = new ResponseError(HttpStatus.BAD_REQUEST, e.getMessage());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<ResponseError> handleValidationErrors(MethodArgumentNotValidException e) {
+    public ResponseEntity<ResponseError> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         List<String> errors = e.getBindingResult().getFieldErrors()
                 .stream().map(f -> MessageFormat.format("{0}: {1}",
                         f.getField(), f.getDefaultMessage())).toList();
@@ -53,21 +53,21 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(NoResourceFoundException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<ResponseError> handleValidationErrors(NoResourceFoundException e) {
+    public ResponseEntity<ResponseError> handleNoResourceFoundException(NoResourceFoundException e) {
         ResponseError response = new ResponseError(HttpStatus.BAD_REQUEST, e.getMessage());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<ResponseError> handleValidationErrors(HttpMessageNotReadableException e) {
+    public ResponseEntity<ResponseError> handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
         ResponseError response = new ResponseError(HttpStatus.BAD_REQUEST, e.getMessage());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(HandlerMethodValidationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<ResponseError> handleValidationErrors(HandlerMethodValidationException e) {
+    public ResponseEntity<ResponseError> handleMethodValidationException(HandlerMethodValidationException e) {
         ResponseError response = new ResponseError(HttpStatus.BAD_REQUEST, e.getReason());
         response.setErrors(new ArrayList<>());
 
