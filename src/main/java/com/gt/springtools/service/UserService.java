@@ -46,7 +46,7 @@ public class UserService {
 
         if (Optional.ofNullable(uuid).isPresent()) {
             userRecord.setExternalId(UUID.fromString(uuid));
-            if (!userRepository.update(userRecord)) {
+            if (Boolean.FALSE.equals(userRepository.update(userRecord))) {
                 throw new EntityPersistenceException(
                         MessageFormat.format("User {0} cannot be updated or does not exist", uuid));
             }
@@ -65,7 +65,7 @@ public class UserService {
     @CacheEvict(value = CacheNames.USERS, allEntries = true)
     @Transactional
     public void delete(String uuid) throws EntityNotFoundException {
-        if (!userRepository.delete(uuid)) {
+        if (Boolean.FALSE.equals(userRepository.delete(uuid))) {
             throw new EntityNotFoundException(MessageFormat.format("User {0} does not exist", uuid));
         }
     }

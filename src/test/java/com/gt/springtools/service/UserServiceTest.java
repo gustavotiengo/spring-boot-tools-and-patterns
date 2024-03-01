@@ -73,7 +73,6 @@ class UserServiceTest {
         List<User> usersFromService = userService.findAll();
 
         assertThat(usersFromService).isNotNull().hasSize(1);
-
     }
 
     @Test
