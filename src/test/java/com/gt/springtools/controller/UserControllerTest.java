@@ -115,12 +115,20 @@ class UserControllerTest {
     }
 
     @Test
-    void create_whenPostUser() throws Exception {
+    void create_whenPostUser_Success() throws Exception {
         Mockito.when(userService.save(newUser, null)).thenReturn(newUser);
         mockMvc.perform(post("/users").content(mapper.writeValueAsString(newUser))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("name", Matchers.is("Mary")));
+    }
+
+    @Test
+    void create_whenPostUser_Failure() throws Exception {
+        Mockito.when(userService.save(newUser, null)).thenThrow(EntityPersistenceException.class);
+        mockMvc.perform(post("/users").content(mapper.writeValueAsString(newUser))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
     }
 
     @Test
