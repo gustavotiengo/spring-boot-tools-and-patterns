@@ -33,7 +33,7 @@ class UserControllerTest {
     @Autowired
     MockMvc mockMvc;
 
-    private static final User existentUser = new User("0ea9c10b-8d45-4c42-bbe0-8f30ea6f35df",
+    private static final User existentValidUser = new User("0ea9c10b-8d45-4c42-bbe0-8f30ea6f35df",
             "John",
             "+55 11 5551122",
             "john@email.com",
@@ -44,7 +44,7 @@ class UserControllerTest {
             LocalDateTime.now(),
             LocalDateTime.now());
 
-    private static final User newUser = new User(null,
+    private static final User newValidUser = new User(null,
             "Mary",
             "+55 11 4441234",
             "mary@email.com",
@@ -70,7 +70,7 @@ class UserControllerTest {
     @Test
     void findAll_WithResults() throws Exception {
         List<User> users = new ArrayList<>();
-        users.add(existentUser);
+        users.add(existentValidUser);
         Mockito.when(userService.findAll()).thenReturn(users);
         mockMvc.perform(get("/users"))
                 .andExpect(status().isOk())
@@ -80,7 +80,7 @@ class UserControllerTest {
 
     @Test
     void findByUuid_ExistentUser() throws Exception {
-        Mockito.when(userService.findByUuid(any())).thenReturn(existentUser);
+        Mockito.when(userService.findByUuid(any())).thenReturn(existentValidUser);
         mockMvc.perform(get("/users/0ea9c10b-8d45-4c42-bbe0-8f30ea6f35df"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("name", Matchers.is("John")))
@@ -101,22 +101,23 @@ class UserControllerTest {
 
     @Test
     void update_whenPutUser() throws Exception {
-        Mockito.when(userService.save(newUser, "0ea9c10b-8d45-4c42-bbe0-8f30ea6f35df")).thenReturn(newUser);
-        mockMvc.perform(put("/users/0ea9c10b-8d45-4c42-bbe0-8f30ea6f35df").content(mapper.writeValueAsString(newUser))
+        Mockito.when(userService.save(newValidUser, "0ea9c10b-8d45-4c42-bbe0-8f30ea6f35df")).thenReturn(newValidUser);
+        mockMvc.perform(put("/users/0ea9c10b-8d45-4c42-bbe0-8f30ea6f35df").content(mapper.writeValueAsString(
+                        newValidUser))
                 .contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
     }
 
     @Test
     void update_whenPutNonExistentUser() throws Exception {
-        Mockito.when(userService.save(newUser, "1234c10b-8d45-4c42-bbe0-8f30ea6f1234"))
+        Mockito.when(userService.save(newValidUser, "1234c10b-8d45-4c42-bbe0-8f30ea6f1234"))
                 .thenThrow(EntityPersistenceException.class);
         mockMvc.perform(put("/users/1234c10b-8d45-4c42-bbe0-8f30ea6f1234")).andExpect(status().isBadRequest());
     }
 
     @Test
     void create_whenPostUser_Success() throws Exception {
-        Mockito.when(userService.save(newUser, null)).thenReturn(newUser);
-        mockMvc.perform(post("/users").content(mapper.writeValueAsString(newUser))
+        Mockito.when(userService.save(newValidUser, null)).thenReturn(newValidUser);
+        mockMvc.perform(post("/users").content(mapper.writeValueAsString(newValidUser))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("name", Matchers.is("Mary")));
@@ -124,8 +125,8 @@ class UserControllerTest {
 
     @Test
     void create_whenPostUser_Failure() throws Exception {
-        Mockito.when(userService.save(newUser, null)).thenThrow(EntityPersistenceException.class);
-        mockMvc.perform(post("/users").content(mapper.writeValueAsString(newUser))
+        Mockito.when(userService.save(newValidUser, null)).thenThrow(EntityPersistenceException.class);
+        mockMvc.perform(post("/users").content(mapper.writeValueAsString(newValidUser))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
     }
