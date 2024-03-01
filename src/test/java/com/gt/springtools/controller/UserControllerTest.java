@@ -56,7 +56,6 @@ class UserControllerTest {
             null);
 
     static final ObjectMapper mapper = new ObjectMapper();
-
     static {
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
     }
