@@ -71,6 +71,11 @@ class GlobalExceptionHandlerTest {
     }
 
     @Test
+    void  testHandleNoResourceFoundException() throws Exception {
+        mockMvc.perform(get("/favicon.ico")).andExpect(status().isBadRequest());
+    }
+
+    @Test
     void testHandleException() throws Exception {
         Mockito.doThrow(RuntimeException.class).when(userService).findAll();
         mockMvc.perform(get("/users")).andExpect(status().isInternalServerError());
