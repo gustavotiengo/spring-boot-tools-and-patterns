@@ -62,7 +62,7 @@ docker-compose up app
 ### 3.1 Available Endpoints
 To-Do
 ### 3.2 Swagger
-To-Do
+After running the app you should be able to access Swagger API Docs through this link: http://localhost:8080/swagger-ui/index.html
 ## 4. Metrics, Monitoring & Tracing
 To-Do
 ## 5. Quality: Code Coverage & Quality Gates
