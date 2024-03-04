@@ -1,9 +1,9 @@
 package com.gt.springtools.dto;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.util.SerializationUtils;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class UserTest {
 
@@ -38,12 +38,19 @@ class UserTest {
 
     @Test
     void testEquals() {
-        assertThat(userA).isNotEqualTo(userB);
+        User u = SerializationUtils.clone(userA);
+        assertThat(userA).isEqualTo(u).isNotEqualTo(userB);
+    }
+
+    @Test
+    void testEqualsNullObject() {
+        assertThat(userA).isNotEqualTo(null).isNotEqualTo(userB);
     }
 
     @Test
     void testHashCode() {
-        assertThat(userA.hashCode()).isNotEqualTo(userB.hashCode());
+        User u = SerializationUtils.clone(userA);
+        assertThat(userA.hashCode()).isEqualTo(u.hashCode()).isNotEqualTo(userB.hashCode());
     }
 
 
