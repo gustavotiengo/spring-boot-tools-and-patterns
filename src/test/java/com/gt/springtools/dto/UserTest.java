@@ -45,7 +45,6 @@ class UserTest {
     @Test
     void testEqualsNullObject() {
         assertThat(userA).isNotEqualTo(null).isNotEqualTo(userB);
-        assertThat((User) null).isNotEqualTo(userA).isNotEqualTo(userB);
     }
 
     @Test

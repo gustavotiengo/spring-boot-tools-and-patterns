@@ -210,12 +210,10 @@ public class User implements Serializable {
         else if (!this.createdAt.equals(other.createdAt))
             return false;
         if (this.lastUpdate == null) {
-            if (other.lastUpdate != null)
-                return false;
+            return other.lastUpdate == null;
         }
-        else if (!this.lastUpdate.equals(other.lastUpdate))
-            return false;
-        return true;
+        else
+            return this.lastUpdate.equals(other.lastUpdate);
     }
 
     @Override
@@ -223,15 +221,8 @@ public class User implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((this.externalId == null) ? 0 : this.externalId.hashCode());
-        result = prime * result + ((this.name == null) ? 0 : this.name.hashCode());
         result = prime * result + ((this.phone == null) ? 0 : this.phone.hashCode());
         result = prime * result + ((this.email == null) ? 0 : this.email.hashCode());
-        result = prime * result + ((this.address == null) ? 0 : this.address.hashCode());
-        result = prime * result + ((this.region == null) ? 0 : this.region.hashCode());
-        result = prime * result + ((this.city == null) ? 0 : this.city.hashCode());
-        result = prime * result + ((this.state == null) ? 0 : this.state.hashCode());
-        result = prime * result + ((this.createdAt == null) ? 0 : this.createdAt.hashCode());
-        result = prime * result + ((this.lastUpdate == null) ? 0 : this.lastUpdate.hashCode());
         return result;
     }
 
