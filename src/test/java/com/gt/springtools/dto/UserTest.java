@@ -13,7 +13,7 @@ class UserTest {
             "mary@email.com",
             "A Street",
             "Bronx",
-            "NY",
+            "New York City",
             "NY",
             null,
             null);
@@ -32,7 +32,7 @@ class UserTest {
     @Test
     void testToString() {
         String userToString = "User (8108e27f-301c-4c2a-8592-de2dd34402e8, Mary, 5551234, mary@email.com, A Street, " +
-                "Bronx, NY, NY, null, null)";
+                "Bronx, New York City, NY, null, null)";
         assertThat(userToString).isEqualTo(userA.toString());
     }
 
@@ -40,11 +40,22 @@ class UserTest {
     void testEquals() {
         User u = SerializationUtils.clone(userA);
         assertThat(userA).isEqualTo(u).isNotEqualTo(userB);
+        assertThat(userA.getExternalId()).isEqualTo("8108e27f-301c-4c2a-8592-de2dd34402e8");
+        assertThat(userA.getName()).isEqualTo("Mary");
+        assertThat(userA.getPhone()).isEqualTo("5551234");
+        assertThat(userA.getEmail()).isEqualTo("mary@email.com");
+        assertThat(userA.getAddress()).isEqualTo("A Street");
+        assertThat(userA.getRegion()).isEqualTo("Bronx");
+        assertThat(userA.getCity()).isEqualTo("New York City");
+        assertThat(userA.getState()).isEqualTo("NY");
+        assertThat(userA.getCreatedAt()).isNull();
+        assertThat(userA.getLastUpdate()).isNull();
     }
 
     @Test
     void testEqualsNullObject() {
         assertThat(userA).isNotEqualTo(null).isNotEqualTo(userB);
+        assertThat((User) null).isNotEqualTo(userA).isNotEqualTo(userB);
     }
 
     @Test
