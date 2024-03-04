@@ -71,12 +71,12 @@ public class GlobalExceptionHandler {
         ResponseError response = new ResponseError(HttpStatus.BAD_REQUEST, e.getReason());
         response.setErrors(new ArrayList<>());
 
-        e.getAllValidationResults().forEach(validation -> validation.getResolvableErrors().forEach(resolvableError -> {
-            if (resolvableError instanceof FieldError fieldError) {
-                response.getErrors()
-                        .add(MessageFormat.format("{0}: {1}", fieldError.getField(), fieldError.getDefaultMessage()));
-            }
-        }));
+        e.getAllValidationResults()
+                .forEach(validation -> validation.getResolvableErrors()
+                        .forEach(resolvableError -> response.getErrors()
+                                .add(MessageFormat.format("{0}: {1}",
+                                        ((FieldError) resolvableError).getField(),
+                                        ((FieldError) resolvableError).getDefaultMessage()))));
 
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
