@@ -28,6 +28,7 @@ ext {
 	postgresVersion = "42.7.2"
 	micrometerVersion = "1.12.3"
 	springDocVersion = "2.3.0"
+	testContainerVersion = "1.19.6"
 }
 
 repositories {
@@ -51,6 +52,9 @@ dependencies {
 	developmentOnly "org.springframework.boot:spring-boot-docker-compose:$springVersion"
 	runtimeOnly "org.postgresql:postgresql:$postgresVersion"
 	testImplementation "org.springframework.boot:spring-boot-starter-test"
+	testImplementation "org.testcontainers:testcontainers:$testContainerVersion"
+	testImplementation "org.testcontainers:postgresql:$testContainerVersion"
+	testImplementation "org.testcontainers:junit-jupiter:$testContainerVersion"
 	testRuntimeOnly "org.junit.platform:junit-platform-launcher"
 
 	jooqGenerator "org.postgresql:postgresql:$postgresVersion"

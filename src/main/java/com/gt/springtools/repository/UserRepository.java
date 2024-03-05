@@ -30,7 +30,7 @@ public class UserRepository {
     public Optional<User> findByUuid(String uuid) {
         return Optional.ofNullable(dbContext.select()
                 .from(USER)
-                .where(USER.EXTERNAL_ID.eq(UUID.fromString(uuid)))
+                .where(USER.EXTERNAL_ID.eq(UUID.fromString(String.valueOf(uuid))))
                 .limit(1)
                 .fetchOneInto(User.class));
     }

@@ -97,10 +97,11 @@ class UserServiceTest {
     @Test
     void findByUuid_NonExistentUser() {
         Mockito.when(userRepository.findByUuid(any())).thenReturn(Optional.empty());
-        EntityNotFoundException e = assertThrows(EntityNotFoundException.class, () -> {
+        Exception e = assertThrows(Exception.class, () -> {
             userService.findByUuid("0ea9c10b-8d45-4c42-bbe0-8f30ea6f35df");
         });
 
+        assertThat(e).isOfAnyClassIn(EntityNotFoundException.class);
         assertThat(e.getMessage()).isEqualTo("User 0ea9c10b-8d45-4c42-bbe0-8f30ea6f35df does not exist");
     }
 
@@ -124,10 +125,11 @@ class UserServiceTest {
     @Test
     void save_UpdateExistentUser_Failure() {
         Mockito.when(userRepository.update(any())).thenReturn(Boolean.FALSE);
-        EntityPersistenceException e = assertThrows(EntityPersistenceException.class, () -> {
+        Exception e = assertThrows(Exception.class, () -> {
             userService.save(newUser, "0ea9c10b-8d45-4c42-bbe0-8f30ea6f35df");
         });
 
+        assertThat(e).isOfAnyClassIn(EntityPersistenceException.class);
         assertThat(e.getMessage()).isEqualTo(
                 "User 0ea9c10b-8d45-4c42-bbe0-8f30ea6f35df cannot be updated or does not exist");
     }
@@ -153,10 +155,11 @@ class UserServiceTest {
     @Test
     void save_CreateNewUser_Failure() {
         Mockito.when(userRepository.insert(any())).thenReturn(null);
-        EntityPersistenceException e = assertThrows(EntityPersistenceException.class, () -> {
+        Exception e = assertThrows(Exception.class, () -> {
             userService.save(newUser, null);
         });
 
+        assertThat(e).isOfAnyClassIn(EntityPersistenceException.class);
         assertThat(e.getMessage()).isEqualTo("Error creating user");
     }
 
@@ -171,10 +174,11 @@ class UserServiceTest {
     @Test
     void delete_NonExistentUser() {
         Mockito.doReturn(Boolean.FALSE).when(userRepository).delete(any());
-        EntityNotFoundException e = assertThrows(EntityNotFoundException.class, () -> {
+        Exception e = assertThrows(Exception.class, () -> {
             userService.delete("0ea9c10b-8d45-4c42-bbe0-8f30ea6f35df");
         });
 
+        assertThat(e).isOfAnyClassIn(EntityNotFoundException.class);
         assertThat(e.getMessage()).isEqualTo("User 0ea9c10b-8d45-4c42-bbe0-8f30ea6f35df does not exist");
     }
 
