@@ -29,6 +29,7 @@ ext {
 	micrometerVersion = "1.12.3"
 	springDocVersion = "2.3.0"
 	testContainerVersion = "1.19.6"
+	flywayVersion = "9.22.3"
 }
 
 repositories {
@@ -55,6 +56,7 @@ dependencies {
 	testImplementation "org.testcontainers:testcontainers:$testContainerVersion"
 	testImplementation "org.testcontainers:postgresql:$testContainerVersion"
 	testImplementation "org.testcontainers:junit-jupiter:$testContainerVersion"
+	testImplementation "org.flywaydb:flyway-core:$flywayVersion"
 	testRuntimeOnly "org.junit.platform:junit-platform-launcher"
 
 	jooqGenerator "org.postgresql:postgresql:$postgresVersion"

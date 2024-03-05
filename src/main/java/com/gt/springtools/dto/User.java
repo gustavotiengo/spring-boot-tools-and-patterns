@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.gt.springtools.Constants;
 import com.gt.springtools.tables.records.UserRecord;
 import jakarta.validation.constraints.*;
+import org.apache.commons.lang3.builder.EqualsBuilder;
 
 import java.beans.ConstructorProperties;
 import java.io.Serial;
@@ -79,7 +80,7 @@ public class User implements Serializable {
     }
 
     public User(UserRecord userRecord) {
-        this.externalId = String.valueOf(userRecord.getExternalId());
+        this.externalId = userRecord.getExternalId() != null ? userRecord.getExternalId().toString() : null;
         this.name = userRecord.getName();
         this.phone = userRecord.getPhone();
         this.email = userRecord.getEmail();
@@ -155,65 +156,7 @@ public class User implements Serializable {
         if (getClass() != obj.getClass())
             return false;
         final User other = (User) obj;
-        if (this.externalId == null) {
-            if (other.externalId != null)
-                return false;
-        }
-        else if (!this.externalId.equals(other.externalId))
-            return false;
-        if (this.name == null) {
-            if (other.name != null)
-                return false;
-        }
-        else if (!this.name.equals(other.name))
-            return false;
-        if (this.phone == null) {
-            if (other.phone != null)
-                return false;
-        }
-        else if (!this.phone.equals(other.phone))
-            return false;
-        if (this.email == null) {
-            if (other.email != null)
-                return false;
-        }
-        else if (!this.email.equals(other.email))
-            return false;
-        if (this.address == null) {
-            if (other.address != null)
-                return false;
-        }
-        else if (!this.address.equals(other.address))
-            return false;
-        if (this.region == null) {
-            if (other.region != null)
-                return false;
-        }
-        else if (!this.region.equals(other.region))
-            return false;
-        if (this.city == null) {
-            if (other.city != null)
-                return false;
-        }
-        else if (!this.city.equals(other.city))
-            return false;
-        if (this.state == null) {
-            if (other.state != null)
-                return false;
-        }
-        else if (!this.state.equals(other.state))
-            return false;
-        if (this.createdAt == null) {
-            if (other.createdAt != null)
-                return false;
-        }
-        else if (!this.createdAt.equals(other.createdAt))
-            return false;
-        if (this.lastUpdate == null) {
-            return other.lastUpdate == null;
-        }
-        else
-            return this.lastUpdate.equals(other.lastUpdate);
+        return EqualsBuilder.reflectionEquals(this, other);
     }
 
     @Override
@@ -221,7 +164,6 @@ public class User implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((this.externalId == null) ? 0 : this.externalId.hashCode());
-        result = prime * result + ((this.phone == null) ? 0 : this.phone.hashCode());
         result = prime * result + ((this.email == null) ? 0 : this.email.hashCode());
         return result;
     }

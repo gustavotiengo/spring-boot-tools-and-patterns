@@ -19,6 +19,8 @@ spring:
     url: jdbc:postgresql://localhost:5432/springtools
     password: admin
     username: admin
+  flyway:
+    enabled: false
   data:
     redis:
       host: localhost

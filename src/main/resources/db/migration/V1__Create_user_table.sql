@@ -1,4 +1,4 @@
-CREATE EXTENSION "uuid-ossp";
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE TABLE IF NOT EXISTS "user" (
 	id serial4 NOT NULL,

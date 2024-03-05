@@ -1,5 +1,6 @@
 package com.gt.springtools.dto;
 
+import com.gt.springtools.tables.records.UserRecord;
 import org.junit.jupiter.api.Test;
 import org.springframework.util.SerializationUtils;
 
@@ -18,9 +19,9 @@ class UserTest {
             null,
             null);
 
-    private static final User userB = new User("8108e27f-301c-4c2a-8592-de2dd34402e8",
+    private static final User userB = new User("4b4460d6-cdd2-4627-9ab2-e2d7b3bf1f10",
             "John",
-            "5551234",
+            "5553456",
             "john@email.com",
             "B Street",
             "Bronx",
@@ -31,8 +32,7 @@ class UserTest {
 
     @Test
     void testToString() {
-        String userToString = "User (8108e27f-301c-4c2a-8592-de2dd34402e8, Mary, 5551234, mary@email.com, A Street, " +
-                "Bronx, New York City, NY, null, null)";
+        String userToString = "User (8108e27f-301c-4c2a-8592-de2dd34402e8, Mary, 5551234, mary@email.com, A Street, " + "Bronx, New York City, NY, null, null)";
         assertThat(userToString).isEqualTo(userA.toString());
     }
 
@@ -51,6 +51,16 @@ class UserTest {
     void testHashCode() {
         User u = SerializationUtils.clone(userA);
         assertThat(userA.hashCode()).isEqualTo(u.hashCode()).isNotEqualTo(userB.hashCode());
+    }
+
+    @Test
+    void testHashCodeNullFields() {
+        UserRecord userRecord = new UserRecord();
+        User user1 = new User(userRecord);
+        User user2 = new User(userRecord);
+        assertThat(userA.hashCode()).isNotEqualTo(user1.hashCode());
+        assertThat(user1.hashCode()).hasSameHashCodeAs(user2.hashCode());
+
     }
 
 
