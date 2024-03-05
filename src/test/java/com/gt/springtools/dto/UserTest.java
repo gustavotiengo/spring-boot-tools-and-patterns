@@ -32,7 +32,7 @@ class UserTest {
 
     @Test
     void testToString() {
-        String userToString = "User (8108e27f-301c-4c2a-8592-de2dd34402e8, Mary, 5551234, mary@email.com, A Street, " + "Bronx, New York City, NY, null, null)";
+        String userToString = "User (8108e27f-301c-4c2a-8592-de2dd34402e8, Mary, 5551234, mary@email.com, A Street, Bronx, New York City, NY, null, null)";
         assertThat(userToString).isEqualTo(userA.toString());
     }
 
@@ -60,7 +60,6 @@ class UserTest {
         User user2 = new User(userRecord);
         assertThat(userA.hashCode()).isNotEqualTo(user1.hashCode());
         assertThat(user1.hashCode()).hasSameHashCodeAs(user2.hashCode());
-
     }
 
 

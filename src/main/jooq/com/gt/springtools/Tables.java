@@ -4,7 +4,6 @@
 package com.gt.springtools;
 
 
-import com.gt.springtools.tables.FlywaySchemaHistory;
 import com.gt.springtools.tables.User;
 
 
@@ -13,11 +12,6 @@ import com.gt.springtools.tables.User;
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tables {
-
-    /**
-     * The table <code>public.flyway_schema_history</code>.
-     */
-    public static final FlywaySchemaHistory FLYWAY_SCHEMA_HISTORY = FlywaySchemaHistory.FLYWAY_SCHEMA_HISTORY;
 
     /**
      * The table <code>public.user</code>.

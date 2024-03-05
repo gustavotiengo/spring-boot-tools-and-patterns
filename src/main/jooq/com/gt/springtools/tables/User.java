@@ -57,22 +57,22 @@ public class User extends TableImpl<UserRecord> {
     /**
      * The column <code>public.user.external_id</code>.
      */
-    public final TableField<UserRecord, UUID> EXTERNAL_ID = createField(DSL.name("external_id"), SQLDataType.UUID.nullable(false), this, "");
+    public final TableField<UserRecord, UUID> EXTERNAL_ID = createField(DSL.name("external_id"), SQLDataType.UUID.nullable(false).defaultValue(DSL.field(DSL.raw("uuid_generate_v4()"), SQLDataType.UUID)), this, "");
 
     /**
      * The column <code>public.user.name</code>.
      */
-    public final TableField<UserRecord, String> NAME = createField(DSL.name("name"), SQLDataType.CLOB, this, "");
+    public final TableField<UserRecord, String> NAME = createField(DSL.name("name"), SQLDataType.CLOB.nullable(false), this, "");
 
     /**
      * The column <code>public.user.phone</code>.
      */
-    public final TableField<UserRecord, String> PHONE = createField(DSL.name("phone"), SQLDataType.CLOB, this, "");
+    public final TableField<UserRecord, String> PHONE = createField(DSL.name("phone"), SQLDataType.CLOB.nullable(false), this, "");
 
     /**
      * The column <code>public.user.email</code>.
      */
-    public final TableField<UserRecord, String> EMAIL = createField(DSL.name("email"), SQLDataType.CLOB, this, "");
+    public final TableField<UserRecord, String> EMAIL = createField(DSL.name("email"), SQLDataType.CLOB.nullable(false), this, "");
 
     /**
      * The column <code>public.user.address</code>.
@@ -97,7 +97,7 @@ public class User extends TableImpl<UserRecord> {
     /**
      * The column <code>public.user.created_at</code>.
      */
-    public final TableField<UserRecord, LocalDateTime> CREATED_AT = createField(DSL.name("created_at"), SQLDataType.LOCALDATETIME(6), this, "");
+    public final TableField<UserRecord, LocalDateTime> CREATED_AT = createField(DSL.name("created_at"), SQLDataType.LOCALDATETIME(6).nullable(false), this, "");
 
     /**
      * The column <code>public.user.last_update</code>.

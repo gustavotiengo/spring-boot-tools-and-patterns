@@ -66,7 +66,10 @@ After running the app you should be able to access Swagger API Docs through this
 ## 4. Metrics, Monitoring & Tracing
 To-Do
 ## 5. Quality: Code Coverage & Quality Gates
-To-Do
+### 5.1 Running Tests
+### 5.2 Testcontainers
+### 5.3 Code Coverage
+### 5.4 Quality Gates
 ## 6. On the way for _production_
 To-Do
 ### 6.1 Application Profiles

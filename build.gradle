@@ -130,6 +130,7 @@ jooq {
 					name = 'org.jooq.codegen.DefaultGenerator'
 					database {
 						name = 'org.jooq.meta.postgres.PostgresDatabase'
+						excludes = 'flyway_schema_history'
 						inputSchema = 'public'
 						forcedTypes {
 							forcedType {
