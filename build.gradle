@@ -90,7 +90,8 @@ jacocoTestReport {
 		classDirectories.setFrom(files(classDirectories.files.collect {
 			fileTree(dir: it, exclude: [
 					"com/gt/springtools/tables/*",
-					"com/gt/springtools/*.*"
+					"com/gt/springtools/*.*",
+					"com/gt/springtools/cache/*"
 			])
 		}))
 	}
