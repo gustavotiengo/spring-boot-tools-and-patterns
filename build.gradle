@@ -102,8 +102,8 @@ sonar {
 		property "sonar.projectKey", "gustavotiengo_springtools"
 		property "sonar.organization", "gustavotiengo"
 		property "sonar.host.url", "https://sonarcloud.io"
-		property 'sonar.exclusions', '**/jooq/com/gt/springtools/tables/pojos/*.java,**/jooq/com/gt/springtools/**,**/tables/**/*,**/SpringToolsApplication.java,**/Constants.java,**/cache/RedisConfig.java'
-		property 'sonar.coverage.exclusions', '**/jooq/com/gt/springtools/tables/pojos/*.java,**/jooq/com/gt/springtools/**,**/tables/**/*,**/SpringToolsApplication.java,**/Constants.java,**/cache/RedisConfig.java'
+		property 'sonar.exclusions', '**/jooq/com/gt/springtools/tables/pojos/*.java,**/jooq/com/gt/springtools/**,**/tables/**/*,**/SpringToolsApplication.java,**/Constants.java,**/cache/*.java'
+		property 'sonar.coverage.exclusions', '**/jooq/com/gt/springtools/tables/pojos/*.java,**/jooq/com/gt/springtools/**,**/tables/**/*,**/SpringToolsApplication.java,**/Constants.java,**/cache/*.java'
 		property 'sonar.coverage.jacoco.xmlReportPaths', '**/build/reports/jacoco/test/jacocoTestReport.xml'
 	}
 }
