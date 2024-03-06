@@ -1,5 +1,6 @@
 package com.gt.springtools.exception;
 
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -73,10 +74,22 @@ public class GlobalExceptionHandler {
 
         e.getAllValidationResults()
                 .forEach(validation -> validation.getResolvableErrors()
-                        .forEach(resolvableError -> response.getErrors()
+                        .stream()
+                        .filter(r -> !(r instanceof FieldError))
+                        .filter(r -> r.getArguments() != null)
+                        .forEach(r -> response.getErrors()
+                                .add(MessageFormat.format("{0}: invalid",
+                                        ((DefaultMessageSourceResolvable) r.getArguments()[0]).getDefaultMessage()))));
+
+        e.getAllValidationResults()
+                .forEach(validation -> validation.getResolvableErrors()
+                        .stream()
+                        .filter(FieldError.class::isInstance)
+                        .forEach(r -> response.getErrors()
                                 .add(MessageFormat.format("{0}: {1}",
-                                        ((FieldError) resolvableError).getField(),
-                                        ((FieldError) resolvableError).getDefaultMessage()))));
+                                        ((FieldError) r).getField(),
+                                        ((FieldError) r).getDefaultMessage())))
+                );
 
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
