@@ -12,11 +12,10 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 
 import java.beans.ConstructorProperties;
 import java.io.Serial;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 
-public class User implements Serializable {
+public class UserDTO extends BaseEntityDTO {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -55,7 +54,7 @@ public class User implements Serializable {
 
     @ConstructorProperties({ "externalId", "name", "phone", "email", "address",
             "region", "city", "state", "createdAt", "lastUpdate" })
-    public User(
+    public UserDTO(
         String externalId,
         String name,
         String phone,
@@ -79,7 +78,7 @@ public class User implements Serializable {
         this.lastUpdate = lastUpdate;
     }
 
-    public User(UserRecord userRecord) {
+    public UserDTO(UserRecord userRecord) {
         this.externalId = userRecord.getExternalId() != null ? userRecord.getExternalId().toString() : null;
         this.name = userRecord.getName();
         this.phone = userRecord.getPhone();
@@ -155,7 +154,7 @@ public class User implements Serializable {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        final User other = (User) obj;
+        final UserDTO other = (UserDTO) obj;
         return EqualsBuilder.reflectionEquals(this, other);
     }
 
@@ -170,7 +169,7 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("User (");
+        StringBuilder sb = new StringBuilder("UserDTO (");
 
         sb.append(externalId);
         sb.append(", ").append(name);

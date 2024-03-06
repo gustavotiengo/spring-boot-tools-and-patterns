@@ -3,7 +3,7 @@ package com.gt.springtools.exception;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gt.springtools.controller.UserController;
-import com.gt.springtools.dto.User;
+import com.gt.springtools.dto.UserDTO;
 import com.gt.springtools.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(UserController.class)
 class GlobalExceptionHandlerTest {
 
-    private static final User validUser = new User(null,
+    private static final UserDTO validUser = new UserDTO(null,
             "Mary",
             "+55 11 4441234",
             "mary@email.com",
@@ -30,7 +30,7 @@ class GlobalExceptionHandlerTest {
             null,
             null);
 
-    private static final User invalidUser = new User(null,
+    private static final UserDTO invalidUser = new UserDTO(null,
             "",
             "Random",
             "WRONG EMAIL PATTERN",

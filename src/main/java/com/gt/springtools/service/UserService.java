@@ -1,7 +1,7 @@
 package com.gt.springtools.service;
 
 import com.gt.springtools.cache.CacheNames;
-import com.gt.springtools.dto.User;
+import com.gt.springtools.dto.UserDTO;
 import com.gt.springtools.exception.EntityNotFoundException;
 import com.gt.springtools.exception.EntityPersistenceException;
 import com.gt.springtools.repository.UserRepository;
@@ -17,7 +17,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class UserService {
+public class UserService implements BaseService<UserDTO> {
 
     private final UserRepository userRepository;
 
@@ -27,20 +27,20 @@ public class UserService {
 
     @Cacheable(CacheNames.USERS)
     @Transactional(readOnly = true)
-    public List<User> findAll() {
+    public List<UserDTO> findAll() {
         return userRepository.findAll();
     }
 
     @Transactional(readOnly = true)
-    public User findByUuid(String uuid) throws EntityNotFoundException {
-        Optional<User> user = userRepository.findByUuid(uuid);
+    public UserDTO findByUuid(String uuid) throws EntityNotFoundException {
+        Optional<UserDTO> user = userRepository.findByUuid(uuid);
         return user.orElseThrow(() ->
                 new EntityNotFoundException(MessageFormat.format("User {0} does not exist", uuid)));
     }
 
     @CacheEvict(value = CacheNames.USERS, allEntries = true)
     @Transactional
-    public User save(User user, String uuid) throws EntityPersistenceException {
+    public UserDTO save(UserDTO user, String uuid) throws EntityPersistenceException {
         UserRecord userRecord = new UserRecord();
         userRecord.from(user);
 
@@ -59,7 +59,7 @@ public class UserService {
             }
         }
 
-        return new User(userRecord);
+        return new UserDTO(userRecord);
     }
 
     @CacheEvict(value = CacheNames.USERS, allEntries = true)

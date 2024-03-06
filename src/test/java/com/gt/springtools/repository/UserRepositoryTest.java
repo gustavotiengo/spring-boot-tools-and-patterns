@@ -1,6 +1,6 @@
 package com.gt.springtools.repository;
 
-import com.gt.springtools.dto.User;
+import com.gt.springtools.dto.UserDTO;
 import com.gt.springtools.tables.records.UserRecord;
 import org.jooq.DSLContext;
 import org.junit.jupiter.api.AfterAll;
@@ -64,8 +64,8 @@ class UserRepositoryTest {
 
     @Test
     void shouldFindByIdSuccessfully() {
-        User u = userRepository.findAll().get(0);
-        Optional<User> userByUuid = userRepository.findByUuid(u.getExternalId());
+        UserDTO u = userRepository.findAll().get(0);
+        Optional<UserDTO> userByUuid = userRepository.findByUuid(u.getExternalId());
         assertThat(userByUuid).isPresent();
         assertThat(userByUuid.get().getExternalId()).isNotEmpty();
     }
@@ -110,7 +110,7 @@ class UserRepositoryTest {
 
     @Test
     void shouldUpdateSuccessfully() {
-        User u = userRepository.findAll().get(0);
+        UserDTO u = userRepository.findAll().get(0);
         UserRecord userRecord = new UserRecord();
         userRecord.from(u);
         userRecord.setName("test update name");
@@ -119,7 +119,7 @@ class UserRepositoryTest {
 
     @Test
     void shouldUpdateIgnored() {
-        User u = userRepository.findAll().get(0);
+        UserDTO u = userRepository.findAll().get(0);
         UserRecord userRecord = new UserRecord();
         userRecord.from(u);
         userRecord.setExternalId(UUID.randomUUID());
@@ -128,7 +128,7 @@ class UserRepositoryTest {
 
     @Test
     void shouldUpdateThrowExceptionForNonNullField() {
-        User u = userRepository.findAll().get(0);
+        UserDTO u = userRepository.findAll().get(0);
         UserRecord userRecord = new UserRecord();
         userRecord.from(u);
         userRecord.setName(null);
@@ -148,7 +148,7 @@ class UserRepositoryTest {
 
     @Test
     void shouldDeleteSuccessfully() {
-        User u = userRepository.findAll().get(0);
+        UserDTO u = userRepository.findAll().get(0);
         assertThat(userRepository.delete(u.getExternalId())).isTrue();
         assertThat(userRepository.findAll()).isNotNull().hasSize(1);
     }
