@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gt.springtools.controller.UserController;
 import com.gt.springtools.dto.UserDTO;
 import com.gt.springtools.service.UserService;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(UserController.class)
@@ -55,13 +57,24 @@ class GlobalExceptionHandlerTest {
     @Test
     void testHandleMethodArgumentNotValidException() throws Exception {
         mockMvc.perform(post("/users").content(mapper.writeValueAsString(invalidUser))
-                .contentType(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest());
+                .contentType(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest())
+                .andExpect(jsonPath("errors", Matchers.hasSize(3)));;
     }
 
     @Test
     void testHandleMethodValidationException() throws Exception {
         mockMvc.perform(put("/users/0ea9c10b-8d45-4c42-bbe0-8f30ea6f35df").content(mapper.writeValueAsString(invalidUser))
-                .contentType(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest());
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("errors", Matchers.hasSize(3)));
+    }
+
+    @Test
+    void testHandleMethodValidationExceptionInvalidPathVariable() throws Exception {
+        mockMvc.perform(put("/users/*(!)").content(mapper.writeValueAsString(invalidUser))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("errors", Matchers.hasSize(Matchers.greaterThanOrEqualTo(4))));
     }
 
     @Test
