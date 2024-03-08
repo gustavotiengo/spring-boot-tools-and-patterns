@@ -2,7 +2,7 @@ package com.gt.springtools.controller;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gt.springtools.dto.User;
+import com.gt.springtools.dto.UserDTO;
 import com.gt.springtools.exception.EntityNotFoundException;
 import com.gt.springtools.exception.EntityPersistenceException;
 import com.gt.springtools.service.UserService;
@@ -33,7 +33,7 @@ class UserControllerTest {
     @Autowired
     MockMvc mockMvc;
 
-    private static final User existentValidUser = new User("0ea9c10b-8d45-4c42-bbe0-8f30ea6f35df",
+    private static final UserDTO existentValidUser = new UserDTO("0ea9c10b-8d45-4c42-bbe0-8f30ea6f35df",
             "John",
             "+55 11 5551122",
             "john@email.com",
@@ -44,7 +44,7 @@ class UserControllerTest {
             LocalDateTime.now(),
             LocalDateTime.now());
 
-    private static final User newValidUser = new User(null,
+    private static final UserDTO newValidUser = new UserDTO(null,
             "Mary",
             "+55 11 4441234",
             "mary@email.com",
@@ -62,14 +62,14 @@ class UserControllerTest {
 
     @Test
     void findAll_NoResults() throws Exception {
-        List<User> users = new ArrayList<>();
+        List<UserDTO> users = new ArrayList<>();
         Mockito.when(userService.findAll()).thenReturn(users);
         mockMvc.perform(get("/users")).andExpect(status().isOk()).andExpect(jsonPath("$", Matchers.hasSize(0)));
     }
 
     @Test
     void findAll_WithResults() throws Exception {
-        List<User> users = new ArrayList<>();
+        List<UserDTO> users = new ArrayList<>();
         users.add(existentValidUser);
         Mockito.when(userService.findAll()).thenReturn(users);
         mockMvc.perform(get("/users"))

@@ -1,6 +1,6 @@
 package com.gt.springtools.repository;
 
-import com.gt.springtools.dto.User;
+import com.gt.springtools.dto.UserDTO;
 import com.gt.springtools.tables.records.UserRecord;
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
@@ -23,16 +23,16 @@ public class UserRepository {
         this.dbContext = dbContext;
     }
 
-    public List<User> findAll() {
-        return dbContext.select().from(USER).limit(QUERY_HARD_LIMIT).fetchInto(User.class);
+    public List<UserDTO> findAll() {
+        return dbContext.select().from(USER).limit(QUERY_HARD_LIMIT).fetchInto(UserDTO.class);
     }
 
-    public Optional<User> findByUuid(String uuid) {
+    public Optional<UserDTO> findByUuid(String uuid) {
         return Optional.ofNullable(dbContext.select()
                 .from(USER)
                 .where(USER.EXTERNAL_ID.eq(UUID.fromString(String.valueOf(uuid))))
                 .limit(1)
-                .fetchOneInto(User.class));
+                .fetchOneInto(UserDTO.class));
     }
 
     public UUID insert(UserRecord user) {

@@ -1,6 +1,6 @@
 package com.gt.springtools.service;
 
-import com.gt.springtools.dto.User;
+import com.gt.springtools.dto.UserDTO;
 import com.gt.springtools.exception.EntityNotFoundException;
 import com.gt.springtools.exception.EntityPersistenceException;
 import com.gt.springtools.repository.UserRepository;
@@ -31,7 +31,7 @@ class UserServiceTest {
     @Mock
     UserRepository userRepository;
 
-    private static final User existentUser = new User("0ea9c10b-8d45-4c42-bbe0-8f30ea6f35df",
+    private static final UserDTO existentUser = new UserDTO("0ea9c10b-8d45-4c42-bbe0-8f30ea6f35df",
             "John",
             "+55 11 5551122",
             "john@email.com",
@@ -42,7 +42,7 @@ class UserServiceTest {
             LocalDateTime.MAX,
             LocalDateTime.MIN);
 
-    private static final User newUser = new User(null,
+    private static final UserDTO newUser = new UserDTO(null,
             "Mary",
             "+55 11 4441234",
             "mary@email.com",
@@ -56,21 +56,21 @@ class UserServiceTest {
 
     @Test
     void findAll_NoResults() {
-        List<User> usersEmptyList = new ArrayList<>();
+        List<UserDTO> usersEmptyList = new ArrayList<>();
 
         Mockito.when(userRepository.findAll()).thenReturn(usersEmptyList);
-        List<User> usersFromService = userService.findAll();
+        List<UserDTO> usersFromService = userService.findAll();
 
         assertThat(usersFromService).isNotNull().isEmpty();
     }
 
     @Test
     void findAll_WithResults() {
-        List<User> usersList = new ArrayList<>();
+        List<UserDTO> usersList = new ArrayList<>();
         usersList.add(existentUser);
 
         Mockito.when(userRepository.findAll()).thenReturn(usersList);
-        List<User> usersFromService = userService.findAll();
+        List<UserDTO> usersFromService = userService.findAll();
 
         assertThat(usersFromService).isNotNull().hasSize(1);
     }
@@ -78,7 +78,7 @@ class UserServiceTest {
     @Test
     void findByUuid_ExistentUser() {
         Mockito.when(userRepository.findByUuid(any())).thenReturn(Optional.of(existentUser));
-        User user = userService.findByUuid(any());
+        UserDTO user = userService.findByUuid(any());
 
         assertThat(user).isNotNull();
         assertThat(user.getExternalId()).isEqualTo("0ea9c10b-8d45-4c42-bbe0-8f30ea6f35df");
@@ -108,7 +108,7 @@ class UserServiceTest {
     @Test
     void save_UpdateExistentUser_Success() {
         Mockito.when(userRepository.update(any())).thenReturn(Boolean.TRUE);
-        User user = userService.save(existentUser, existentUser.getExternalId());
+        UserDTO user = userService.save(existentUser, existentUser.getExternalId());
         assertThat(user).isNotNull();
         assertThat(user.getExternalId()).isEqualTo("0ea9c10b-8d45-4c42-bbe0-8f30ea6f35df");
         assertThat(user.getName()).isEqualTo("John");
@@ -138,7 +138,7 @@ class UserServiceTest {
     void save_CreateNewUser_Success() {
         UUID uuid = UUID.randomUUID();
         Mockito.when(userRepository.insert(any())).thenReturn(uuid);
-        User user = userService.save(newUser, null);
+        UserDTO user = userService.save(newUser, null);
         assertThat(user).isNotNull();
         assertThat(user.getExternalId()).isEqualTo(uuid.toString());
         assertThat(user.getName()).isEqualTo("Mary");
