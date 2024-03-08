@@ -107,17 +107,17 @@ services:
     image: grafana/k6:0.49.0
     ports:
       - "6565:6565"
-    command: run /scripts/load-test.js
+    command: run /lt/load-test.js
     environment:
       - K6_OUT=influxdb=http://influxdb:8086/k6
-      - K6_INFLUXDB_PUSH_INTERVAL=3s
-      - K6_INFLUXDB_CONCURRENT_WRITES=32
+      - K6_INFLUXDB_PUSH_INTERVAL=2s
+      - K6_INFLUXDB_CONCURRENT_WRITES=16
     depends_on:
       - influxdb
       - app
     restart: no
     volumes:
-      - ./load-test:/scripts
+      - ./load-test:/lt
 volumes:
   sonarqube_logs:
   sonarqube_data:
