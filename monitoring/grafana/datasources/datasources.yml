@@ -5,3 +5,10 @@ datasources:
     access: proxy
     url: http://prometheus:9090
     isDefault: true
+
+  - name: influxdb
+    type: influxdb
+    access: proxy
+    database: k6
+    url: http://influxdb:8086
+    isDefault: false

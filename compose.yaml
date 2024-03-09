@@ -91,7 +91,33 @@ services:
       - "3000:3000"
     restart: unless-stopped
     volumes:
+      - ./dashboards:/var/lib/grafana/dashboards
       - ./monitoring/grafana/datasources:/etc/grafana/provisioning/datasources
+  influxdb:
+    image: influxdb:1.8-alpine
+    ports:
+      - "8086:8086"
+    restart: unless-stopped
+    depends_on:
+      - grafana
+    environment:
+      - INFLUXDB_DB=k6
+      - INFLUXDB_HTTP_MAX_BODY_SIZE=0
+  k6:
+    image: grafana/k6:0.49.0
+    ports:
+      - "6565:6565"
+    command: run /lt/load-test.js
+    environment:
+      - K6_OUT=influxdb=http://influxdb:8086/k6
+      - K6_INFLUXDB_PUSH_INTERVAL=2s
+      - K6_INFLUXDB_CONCURRENT_WRITES=16
+    depends_on:
+      - influxdb
+      - app
+    restart: no
+    volumes:
+      - ./load-test:/lt
 volumes:
   sonarqube_logs:
   sonarqube_data:
