@@ -10,6 +10,7 @@ services:
     depends_on:
       - postgres
       - redis
+      - flyway
     ports:
       - "8080:8080"
       - "8081:8081"
@@ -90,6 +91,9 @@ services:
     ports:
       - "3000:3000"
     restart: unless-stopped
+    depends_on:
+      - influxdb
+      - prometheus
     volumes:
       - ./dashboards:/var/lib/grafana/dashboards
       - ./monitoring/grafana/datasources:/etc/grafana/provisioning/datasources
@@ -98,8 +102,6 @@ services:
     ports:
       - "8086:8086"
     restart: unless-stopped
-    depends_on:
-      - grafana
     environment:
       - INFLUXDB_DB=k6
       - INFLUXDB_HTTP_MAX_BODY_SIZE=0
@@ -113,7 +115,7 @@ services:
       - K6_INFLUXDB_PUSH_INTERVAL=2s
       - K6_INFLUXDB_CONCURRENT_WRITES=16
     depends_on:
-      - influxdb
+      - grafana
       - app
     restart: no
     volumes:
