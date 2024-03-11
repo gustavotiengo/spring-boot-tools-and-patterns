@@ -25,6 +25,7 @@ public abstract class BaseController<T extends BaseEntityDTO> implements BaseCon
 
     @Override
     public ResponseEntity<List<T>> findAll() {
+        logger.debug("Find from cache or database");
         return ResponseEntity.ok(service().findAll());
     }
 
