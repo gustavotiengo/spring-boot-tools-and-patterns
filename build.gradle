@@ -54,7 +54,7 @@ dependencies {
 	implementation "io.micrometer:micrometer-tracing-bridge-otel:1.2.2"
 	implementation "io.micrometer:micrometer-registry-prometheus:$micrometerVersion"
 	implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:$springDocVersion"
-	implementation "io.opentelemetry:opentelemetry-expoqrter-otlp"
+	implementation "io.opentelemetry:opentelemetry-exporter-otlp"
 
 	developmentOnly "org.springframework.boot:spring-boot-docker-compose:$springVersion"
 	runtimeOnly "org.postgresql:postgresql:$postgresVersion"
