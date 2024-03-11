@@ -1,5 +1,6 @@
 package com.gt.springtools.exception;
 
+import io.github.resilience4j.circuitbreaker.CallNotPermittedException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -92,6 +93,14 @@ public class GlobalExceptionHandler {
                 );
 
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(CallNotPermittedException.class)
+    @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
+    public ResponseEntity<ResponseError> handleCircuitOpenException(CallNotPermittedException e) {
+        ResponseError response = new ResponseError(HttpStatus.SERVICE_UNAVAILABLE,
+                "Method temporarily unavailable. Please try again in a few seconds");
+        return new ResponseEntity<>(response, HttpStatus.SERVICE_UNAVAILABLE);
     }
 
     @ExceptionHandler(Exception.class)

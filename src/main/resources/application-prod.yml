@@ -3,6 +3,9 @@ server:
 management:
   server:
     port: 8081
+  tracing:
+    sampling:
+      probability: 1.0
   endpoints:
     web:
       exposure:
@@ -11,6 +14,8 @@ management:
     health:
       show-details: always
   health:
+    circuitbreakers:
+      enabled: true
     probes:
       enabled: true
 spring:
@@ -19,6 +24,8 @@ spring:
     url: jdbc:postgresql://postgres:5432/springtools
     password: admin
     username: admin
+    hikari:
+      connectionTimeout: 2000
   flyway:
     enabled: false
   data:
@@ -38,3 +45,16 @@ cache:
     entryTtl: 30
     users:
       entryTtl: 15
+tracing:
+  url: http://jaeger:4317
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      minimumNumberOfCalls: 100
+      registerHealthIndicator: true
+      slidingWindowType: COUNT_BASED
+      slidingWindowSize: 100
+      permittedNumberOfCallsInHalfOpenState: 50
+      automaticTransitionFromOpenToHalfOpenEnabled: true
+      waitDurationInOpenState: 30s
+      failureRateThreshold: 30

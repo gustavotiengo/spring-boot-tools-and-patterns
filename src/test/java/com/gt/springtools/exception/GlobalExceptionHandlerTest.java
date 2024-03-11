@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gt.springtools.controller.UserController;
 import com.gt.springtools.dto.UserDTO;
 import com.gt.springtools.service.UserService;
+import io.github.resilience4j.circuitbreaker.CallNotPermittedException;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -86,6 +87,12 @@ class GlobalExceptionHandlerTest {
     @Test
     void  testHandleNoResourceFoundException() throws Exception {
         mockMvc.perform(get("/favicon.ico")).andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void testHandleCircuitOpenException() throws Exception {
+        Mockito.doThrow(CallNotPermittedException.class).when(userService).findAll();
+        mockMvc.perform(get("/users")).andExpect(status().isServiceUnavailable());
     }
 
     @Test
