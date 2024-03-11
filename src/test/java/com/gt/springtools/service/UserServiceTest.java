@@ -10,6 +10,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.redis.RedisConnectionFailureException;
+import org.springframework.transaction.CannotCreateTransactionException;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -59,9 +61,17 @@ class UserServiceTest {
         List<UserDTO> usersEmptyList = new ArrayList<>();
 
         Mockito.when(userRepository.findAll()).thenReturn(usersEmptyList);
-        List<UserDTO> usersFromService = userService.findAll();
 
+        List<UserDTO> usersFromService = userService.findAll();
         assertThat(usersFromService).isNotNull().isEmpty();
+
+        List<UserDTO> usersDatabaseFallbackFromService =
+                userService.findAllFallback(new CannotCreateTransactionException(""));
+        assertThat(usersDatabaseFallbackFromService).isNotNull().isEmpty();
+
+        List<UserDTO> usersCacheFallbackFromService =
+                userService.findAllFallback(new RedisConnectionFailureException(""));
+        assertThat(usersCacheFallbackFromService).isNotNull().isEmpty();
     }
 
     @Test
@@ -70,9 +80,17 @@ class UserServiceTest {
         usersList.add(existentUser);
 
         Mockito.when(userRepository.findAll()).thenReturn(usersList);
-        List<UserDTO> usersFromService = userService.findAll();
 
+        List<UserDTO> usersFromService = userService.findAll();
         assertThat(usersFromService).isNotNull().hasSize(1);
+
+        List<UserDTO> usersDatabaseFallbackFromService =
+                userService.findAllFallback(new CannotCreateTransactionException(""));
+        assertThat(usersDatabaseFallbackFromService).isNotNull().isEmpty();
+
+        List<UserDTO> usersCacheFallbackFromService =
+                userService.findAllFallback(new RedisConnectionFailureException(""));
+        assertThat(usersCacheFallbackFromService).isNotNull().hasSize(1);
     }
 
     @Test

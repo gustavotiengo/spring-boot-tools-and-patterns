@@ -9,11 +9,13 @@ management:
   endpoints:
     web:
       exposure:
-        include: health
+        include: "*"
   endpoint:
     health:
       show-details: always
   health:
+    circuitbreakers:
+      enabled: true
     probes:
       enabled: true
 spring:
@@ -22,6 +24,8 @@ spring:
     url: jdbc:postgresql://localhost:5432/springtools
     password: admin
     username: admin
+    hikari:
+      connectionTimeout: 2000
   flyway:
     enabled: false
   data:
@@ -43,3 +47,14 @@ cache:
       entryTtl: 1
 tracing:
   url: http://localhost:4317
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      minimumNumberOfCalls: 15
+      registerHealthIndicator: true
+      slidingWindowType: COUNT_BASED
+      slidingWindowSize: 30
+      permittedNumberOfCallsInHalfOpenState: 20
+      automaticTransitionFromOpenToHalfOpenEnabled: true
+      waitDurationInOpenState: 10s
+      failureRateThreshold: 50

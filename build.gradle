@@ -30,6 +30,7 @@ ext {
 	springDocVersion = "2.3.0"
 	testContainerVersion = "1.19.6"
 	flywayVersion = "9.22.3"
+	resilience4jVersion = "2.2.0"
 }
 
 repositories {
@@ -47,10 +48,13 @@ dependencies {
 	implementation "org.springframework.boot:spring-boot-starter-actuator:$springVersion"
 	implementation "org.springframework.boot:spring-boot-starter-validation:$springVersion"
 	implementation "org.springframework.boot:spring-boot-starter-data-redis:$springVersion"
+	implementation "org.springframework.boot:spring-boot-starter-aop:$springVersion"
+	implementation "io.github.resilience4j:resilience4j-spring-boot3:$resilience4jVersion"
+	implementation "io.github.resilience4j:resilience4j-micrometer:$resilience4jVersion"
 	implementation "io.micrometer:micrometer-tracing-bridge-otel:1.2.2"
 	implementation "io.micrometer:micrometer-registry-prometheus:$micrometerVersion"
 	implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:$springDocVersion"
-	implementation "io.opentelemetry:opentelemetry-exporter-otlp"
+	implementation "io.opentelemetry:opentelemetry-expoqrter-otlp"
 
 	developmentOnly "org.springframework.boot:spring-boot-docker-compose:$springVersion"
 	runtimeOnly "org.postgresql:postgresql:$postgresVersion"

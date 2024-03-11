@@ -41,11 +41,17 @@ public class RedisConfig {
     @Bean
     public LettuceConnectionFactory redisConnectionFactory() {
         SocketOptions socketOptions = SocketOptions.builder().connectTimeout(Duration.ofSeconds(5)).build();
-        ClientOptions clientOptions = ClientOptions.builder().socketOptions(socketOptions).autoReconnect(true).build();
+        ClientOptions clientOptions = ClientOptions.builder()
+                .socketOptions(socketOptions)
+                .disconnectedBehavior(ClientOptions.DisconnectedBehavior.REJECT_COMMANDS)
+                .autoReconnect(true)
+                .build();
+
         LettuceClientConfiguration clientConfig = LettuceClientConfiguration.builder()
-                .commandTimeout(Duration.ofMillis(1000))
+                .commandTimeout(Duration.ofSeconds(1))
                 .clientOptions(clientOptions)
                 .build();
+
         LettuceConnectionFactory lettuceConnectionFactory = new LettuceConnectionFactory(redisConfiguration(),
                 clientConfig);
         lettuceConnectionFactory.setValidateConnection(true);
@@ -54,19 +60,16 @@ public class RedisConfig {
 
     @Bean
     public RedisCacheConfiguration cacheConfiguration() {
-        return RedisCacheConfiguration
-                .defaultCacheConfig()
+        return RedisCacheConfiguration.defaultCacheConfig()
                 .entryTtl(Duration.ofMinutes(entryTtl))
                 .disableCachingNullValues()
-                .serializeValuesWith( RedisSerializationContext.SerializationPair
-                        .fromSerializer(new GenericJackson2JsonRedisSerializer()));
+                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()));
     }
 
     @Bean
     public RedisCacheManagerBuilderCustomizer redisCacheManagerBuilderCustomizer() {
         return builder -> {
-            var usersConf = RedisCacheConfiguration.defaultCacheConfig()
-                    .entryTtl(Duration.ofMinutes(usersEntryTtl));
+            var usersConf = RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofMinutes(usersEntryTtl));
             builder.withCacheConfiguration(CacheNames.USERS, usersConf).enableStatistics();
         };
     }
