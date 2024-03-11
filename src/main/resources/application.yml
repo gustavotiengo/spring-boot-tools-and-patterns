@@ -3,6 +3,9 @@ server:
 management:
   server:
     port: 8081
+  tracing:
+    sampling:
+      probability: 1.0
   endpoints:
     web:
       exposure:
@@ -38,3 +41,5 @@ cache:
     entryTtl: 1
     users:
       entryTtl: 1
+tracing:
+  url: http://localhost:4317
