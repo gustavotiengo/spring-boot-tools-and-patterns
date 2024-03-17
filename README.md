@@ -41,6 +41,9 @@ docker-compose up flyway
 ```
 
 ### 2.2 Running the Spring application
+#### 2.2.1 Environment Variables
+To-Do
+#### 2.2.2 Running the app
 There are several ways to run a Spring Boot application on your local machine. One way is to execute the `main` method
 in the `com.gt.springtools.SpringToolsApplication` class from your IDE. Alternatively you can use the 
 [Spring Boot Gradle plugin](https://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins.html#build-tool-plugins.gradle) like so:
@@ -66,10 +69,10 @@ After running the app you should be able to access Swagger API Docs through this
 ## 4. Metrics, Monitoring & Tracing
 To-Do
 ## 5. Quality: Code Coverage & Quality Gates
-### 5.1 Running Tests
-### 5.2 Testcontainers
-### 5.3 Code Coverage
-### 5.4 Quality Gates
+### 5.1 Running Unit Tests
+### 5.2 Integration Tests & Testcontainers
+### 5.3 Code Coverage & Quality Gates
+### 5.4 Load Test using k6
 ## 6. On the way for _production_
 To-Do
 ### 6.1 Application Profiles
