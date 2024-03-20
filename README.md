@@ -16,6 +16,7 @@ For building and running the application you need:
 - [JDK 17](https://openjdk.org/projects/jdk/17/)
 - [Gradle 8.6](https://gradle.org/) (Recommended use of gradle wrapper)
 - [Docker 25](https://docs.docker.com/engine/release-notes/25.0/)
+---
 
 ## 2. Running the application locally
 
@@ -41,8 +42,12 @@ docker-compose up flyway
 ```
 
 ### 2.2 Running the Spring application
-#### 2.2.1 Environment Variables
-To-Do
+#### 2.2.1 Required environment variables
+- DATABASE_USERNAME
+- DATABASE_PASSWORD
+
+**Never commit production keys, secrets, certificates or passwords to public or private repositories.**
+
 #### 2.2.2 Running the app
 There are several ways to run a Spring Boot application on your local machine. One way is to execute the `main` method
 in the `com.gt.springtools.SpringToolsApplication` class from your IDE. Alternatively you can use the 
@@ -78,6 +83,15 @@ To-Do
 ### 6.1 Application Profiles
 To-Do
 ### 6.2 GitHub Actions Workflow
-To-Do
+In order to execute the workflow defined in _**.github/workflows/main.yml**_ it's required to change repository workflow 
+permissions settings. This will allow some test steps writing data (like coverage report) during the execution.
+Follow this path to change the Read/Write setting:
+```
+- Settings
+  - Actions
+    - General
+      - Workflow permissions
+        - Check "Read and write permissions"
+```
 ## 7. Copyright
 Released under the Apache License 2.0. See the [LICENSE](https://github.com/codecentric/springboot-sample-app/blob/master/LICENSE) file.

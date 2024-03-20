@@ -22,8 +22,8 @@ spring:
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/springtools
-    password: admin
-    username: admin
+    password: ${DATABASE_USERNAME}
+    username: ${DATABASE_PASSWORD}
     hikari:
       connectionTimeout: 2000
   flyway:
