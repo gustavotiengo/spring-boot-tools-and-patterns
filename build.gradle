@@ -130,8 +130,8 @@ jooq {
 				jdbc {
 					driver = 'org.postgresql.Driver'
 					url = 'jdbc:postgresql://localhost:5432/springtools'
-					user = 'admin'
-					password = 'admin'
+					user = System.getenv('DATABASE_USERNAME')
+					password = System.getenv('DATABASE_PASSWORD')
 				}
 				generator {
 					name = 'org.jooq.codegen.DefaultGenerator'

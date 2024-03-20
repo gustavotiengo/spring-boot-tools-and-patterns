@@ -46,6 +46,13 @@ docker-compose up flyway
 - DATABASE_USERNAME
 - DATABASE_PASSWORD
 
+Database environment variables are required for both `build` and `run` steps (described in the next section) due to 
+Jooq 
+code generation on 
+`build` step. 
+
+(Running `generateJooq` gradle task also requires both environment variables)
+
 **Never commit production keys, secrets, certificates or passwords to public or private repositories.**
 
 #### 2.2.2 Running the app
