@@ -16,7 +16,6 @@ For building and running the application you need:
 - [JDK 17](https://openjdk.org/projects/jdk/17/)
 - [Gradle 8.6](https://gradle.org/) (Recommended use of gradle wrapper)
 - [Docker 25](https://docs.docker.com/engine/release-notes/25.0/)
----
 
 ## 2. Running the application locally
 
@@ -53,7 +52,10 @@ code generation on
 
 (Running `generateJooq` gradle task also requires both environment variables)
 
+---
 **Never commit production keys, secrets, certificates or passwords to public or private repositories.**
+
+---
 
 #### 2.2.2 Running the app
 There are several ways to run a Spring Boot application on your local machine. One way is to execute the `main` method
@@ -101,7 +103,13 @@ You could use custom Gradle task `bootRunProd` (take a look at _build.gradle_ fi
 profile. Feel free to create new profiles, new application yml config files and new Gradle tasks.
 
 There are many ways to create, manage and use profiles. More on Spring Boot profiles capabilities [here](https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.profiles)
-### 6.2 GitHub Actions Workflow
+### 6.2 GitHub Actions Workflow (CI)
+#### 6.2.1 Test Steps
+To-Do
+#### 6.2.2 Build Steps
+To-Do
+
+---
 In order to execute the workflow defined in _**.github/workflows/main.yml**_ it's required to change repository workflow 
 permissions settings. This will allow some test steps writing data (like coverage report) during the execution.
 Follow this path to change the Read/Write setting:
@@ -112,5 +120,6 @@ Follow this path to change the Read/Write setting:
       - Workflow permissions
         - Check "Read and write permissions"
 ```
+
 ## 7. Copyright
 Released under the Apache License 2.0. See the [LICENSE](https://github.com/codecentric/springboot-sample-app/blob/master/LICENSE) file.
