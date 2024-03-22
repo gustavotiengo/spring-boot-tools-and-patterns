@@ -88,7 +88,19 @@ To-Do
 ## 6. On the way for _production_
 To-Do
 ### 6.1 Application Profiles
-To-Do
+| Profile            | Configuration File    |
+|--------------------|-----------------------|
+| default            | _application.yml_     |
+| prod               | _application-prod.yml_ |
+| tc (_testcontainer_) | _application-tc.yml_  |
+
+The default `bootRun` task runs the application without passing spring profile parameter (_spring.profiles.active_). 
+That way Spring is going to run with `default` profile.
+
+You could use custom Gradle task `bootRunProd` (take a look at _build.gradle_ file) to run the application using `prod` 
+profile. Feel free to create new profiles, new application yml config files and new Gradle tasks.
+
+There are many ways to create, manage and use profiles. More on Spring Boot profiles capabilities [here](https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.profiles)
 ### 6.2 GitHub Actions Workflow
 In order to execute the workflow defined in _**.github/workflows/main.yml**_ it's required to change repository workflow 
 permissions settings. This will allow some test steps writing data (like coverage report) during the execution.
