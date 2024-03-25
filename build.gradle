@@ -24,7 +24,7 @@ configurations {
 }
 
 ext {
-	springVersion = "3.2.2"
+	springVersion = "3.2.4"
 	postgresVersion = "42.7.2"
 	micrometerVersion = "1.12.3"
 	springDocVersion = "2.3.0"
@@ -56,7 +56,7 @@ dependencies {
 	implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:$springDocVersion"
 	implementation "io.opentelemetry:opentelemetry-exporter-otlp"
 
-	developmentOnly "org.springframework.boot:spring-boot-docker-compose:$springVersion"
+//	developmentOnly "org.springframework.boot:spring-boot-docker-compose:$springVersion"
 	runtimeOnly "org.postgresql:postgresql:$postgresVersion"
 	testImplementation "org.springframework.boot:spring-boot-starter-test"
 	testImplementation "org.testcontainers:testcontainers:$testContainerVersion"
@@ -130,8 +130,8 @@ jooq {
 				jdbc {
 					driver = 'org.postgresql.Driver'
 					url = 'jdbc:postgresql://localhost:5432/springtools'
-					user = System.getenv('DATABASE_USERNAME')
-					password = System.getenv('DATABASE_PASSWORD')
+					user = 'admin'
+					password = 'admin'
 				}
 				generator {
 					name = 'org.jooq.codegen.DefaultGenerator'
