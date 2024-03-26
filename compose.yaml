@@ -38,7 +38,7 @@ services:
       - postgres:/var/lib/postgresql/data
     restart: unless-stopped
   redis:
-    image: redis:7.2.3-alpine
+    image: redis:7.2.4-alpine
     command: redis-server
     ports:
       - "6379:6379"
