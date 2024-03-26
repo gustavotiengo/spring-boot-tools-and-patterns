@@ -27,7 +27,7 @@ services:
       - COLLECTOR_OTLP_ENABLED=true
     restart: unless-stopped
   postgres:
-    image: 'postgres:15.1-alpine'
+    image: 'postgres:16.2-alpine'
     environment:
       - "POSTGRES_DB=springtools"
       - "POSTGRES_PASSWORD=admin"
