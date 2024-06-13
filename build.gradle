@@ -24,11 +24,11 @@ configurations {
 }
 
 ext {
-	springVersion = "3.2.4"
+	springVersion = "3.3.0"
 	postgresVersion = "42.7.2"
 	micrometerVersion = "1.12.3"
 	springDocVersion = "2.3.0"
-	testContainerVersion = "1.19.7"
+	testContainerVersion = "1.19.8"
 	flywayVersion = "9.22.3"
 	resilience4jVersion = "2.2.0"
 }
