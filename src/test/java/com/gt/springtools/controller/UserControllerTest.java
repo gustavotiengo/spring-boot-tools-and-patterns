@@ -141,5 +141,26 @@ class UserControllerTest {
         Mockito.doThrow(EntityNotFoundException.class).when(userService).delete(any());
         mockMvc.perform(delete("/users/1234c10b-8d45-4c42-bbe0-8f30ea6f1234")).andExpect(status().isNotFound());
     }
+    @Test
+    void update_whenPutUser_Failure() throws Exception {
+        Mockito.when(userService.save(any(UserDTO.class), any(String.class)))
+                .thenThrow(new EntityPersistenceException("Error updating user"));
+
+        mockMvc.perform(put("/users/0ea9c10b-8d45-4c42-bbe0-8f30ea6f35df")
+                        .content(mapper.writeValueAsString(newValidUser))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void create_whenPostUser_InternalError() throws Exception {
+        Mockito.when(userService.save(any(UserDTO.class), Mockito.isNull()))
+                .thenThrow(new RuntimeException("Unexpected error"));
+
+        mockMvc.perform(post("/users")
+                        .content(mapper.writeValueAsString(newValidUser))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isInternalServerError());
+    }
 
 }

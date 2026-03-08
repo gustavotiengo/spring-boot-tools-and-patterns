@@ -32,4 +32,10 @@ class ResponseErrorTest {
         assertThat(responseError.getMessage()).isEqualTo("error");
     }
 
+    @Test
+    void testSetErrors() {
+        responseError.setErrors(java.util.List.of("error 1", "error 2"));
+        assertThat(responseError.getErrors()).hasSize(2).containsExactly("error 1", "error 2");
+    }
+
 }
