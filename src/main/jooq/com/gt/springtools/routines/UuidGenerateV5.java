@@ -52,8 +52,9 @@ public class UuidGenerateV5 extends AbstractRoutine<UUID> {
     /**
      * Set the <code>namespace</code> parameter IN value to the routine
      */
-    public void setNamespace(UUID value) {
+    public UuidGenerateV5 setNamespace(UUID value) {
         setValue(NAMESPACE, value);
+        return this;
     }
 
     /**
@@ -68,8 +69,9 @@ public class UuidGenerateV5 extends AbstractRoutine<UUID> {
     /**
      * Set the <code>name</code> parameter IN value to the routine
      */
-    public void setName_(String value) {
+    public UuidGenerateV5 setName_(String value) {
         setValue(NAME, value);
+        return this;
     }
 
     /**

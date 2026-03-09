@@ -1,7 +1,7 @@
 plugins {
 	id 'java'
 	id 'jacoco'
-	id 'org.springframework.boot' version '3.3.3'
+	id 'org.springframework.boot' version '3.5.11'
 	id 'io.spring.dependency-management' version '1.1.4'
 	id 'nu.studer.jooq' version '9.0'
 	id 'com.dorongold.task-tree' version '2.1.1'
@@ -20,6 +20,9 @@ version = '0.0.1-SNAPSHOT'
 
 java {
 	sourceCompatibility = '21'
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
 }
 
 configurations {
@@ -31,20 +34,27 @@ configurations {
 }
 
 ext {
-	springVersion = "3.3.3"
+	springVersion = "3.5.11"
 	postgresVersion = "42.7.2"
 	micrometerVersion = "1.12.3"
 	springDocVersion = "2.3.0"
 	testContainerVersion = "1.19.8"
 	flywayVersion = "9.22.3"
 	resilience4jVersion = "2.2.0"
+	jooqVersion = "3.5.9"
 }
 
 dependencies {
-	implementation "org.springframework.boot:spring-boot-starter:$springVersion"
-	implementation "org.springframework.boot:spring-boot-starter-web:$springVersion"
-	implementation "org.springframework.boot:spring-boot-starter-jooq:$springVersion"
-	implementation "org.springframework.boot:spring-boot-starter-log4j2:$springVersion"
+	implementation("org.springframework.boot:spring-boot-starter:$springVersion") {
+		exclude group: "org.springframework.boot", module: "spring-boot-starter-logging"
+	}
+	implementation("org.springframework.boot:spring-boot-starter-web:$springVersion") {
+		exclude group: "org.springframework.boot", module: "spring-boot-starter-logging"
+	}
+	implementation "org.springframework.boot:spring-boot-starter-jooq:$jooqVersion"
+	implementation("org.springframework.boot:spring-boot-starter-log4j2:$springVersion") {
+		exclude group: "org.springframework.boot", module: "spring-boot-starter-logging"
+	}
 	implementation "org.springframework.boot:spring-boot-starter-actuator:$springVersion"
 	implementation "org.springframework.boot:spring-boot-starter-validation:$springVersion"
 	implementation "org.springframework.boot:spring-boot-starter-data-redis:$springVersion"
@@ -122,7 +132,7 @@ tasks.named('sonar').configure {
 }
 
 jooq {
-	version = '3.19.24'
+	version = '3.19.30'
 
 	configurations {
 		main {
