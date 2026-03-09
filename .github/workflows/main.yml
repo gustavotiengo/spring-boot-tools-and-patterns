@@ -44,17 +44,14 @@ jobs:
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
 
-      - name: Build and Analyze (Sonar)
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: gradle build -x generateJooq sonar --info
+      - name: Build
+        run: gradle build -x generateJooq
 
       - name: JaCoCo Code Coverage Report
         id: jacoco_reporter
         uses: 'PavanMudigonda/jacoco-reporter@v5.0'
         with:
-          coverage_results_path:  ${{ github.workspace }}/build/reports/jacoco/test/jacocoTestReport.xml
+          coverage_results_path: ${{ github.workspace }}/build/reports/jacoco/test/jacocoTestReport.xml
           coverage_report_name: Coverage
           coverage_report_title: JaCoCo
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -76,6 +73,12 @@ jobs:
           echo "Changed Files coverage ${{ steps.jacoco.outputs.coverage-changed-files }}"
           echo "Coverage coveragePercentage ${{ steps.jacoco_reporter.outputs.coveragePercentage }}"
           echo "Coverage coveragePercentageString ${{ steps.jacoco_reporter.outputs.coveragePercentageString }}"
+
+      - name: Analyze (Sonar)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: gradle sonar --info
 
   build:
     needs: test
