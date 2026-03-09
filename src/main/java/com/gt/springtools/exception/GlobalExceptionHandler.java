@@ -15,7 +15,6 @@ import org.springframework.web.method.annotation.HandlerMethodValidationExceptio
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestControllerAdvice
@@ -71,26 +70,18 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<ResponseError> handleMethodValidationException(HandlerMethodValidationException e) {
         ResponseError response = new ResponseError(HttpStatus.BAD_REQUEST, e.getReason());
-        response.setErrors(new ArrayList<>());
-
-        e.getAllValidationResults()
-                .forEach(validation -> validation.getResolvableErrors()
-                        .stream()
-                        .filter(r -> !(r instanceof FieldError))
-                        .filter(r -> r.getArguments() != null)
-                        .forEach(r -> response.getErrors()
-                                .add(MessageFormat.format("{0}: invalid",
-                                        ((DefaultMessageSourceResolvable) r.getArguments()[0]).getDefaultMessage()))));
-
-        e.getAllValidationResults()
-                .forEach(validation -> validation.getResolvableErrors()
-                        .stream()
-                        .filter(FieldError.class::isInstance)
-                        .forEach(r -> response.getErrors()
-                                .add(MessageFormat.format("{0}: {1}",
-                                        ((FieldError) r).getField(),
-                                        ((FieldError) r).getDefaultMessage())))
-                );
+        List<String> errors = e.getAllValidationResults().stream()
+                .flatMap(v -> v.getResolvableErrors().stream())
+                .map(r -> {
+                    if (r instanceof FieldError f) {
+                        return MessageFormat.format("{0}: {1}", f.getField(), f.getDefaultMessage());
+                    }
+                    if (r.getArguments() != null && r.getArguments().length > 0 && r.getArguments()[0] instanceof DefaultMessageSourceResolvable d) {
+                        return MessageFormat.format("{0}: invalid", d.getDefaultMessage());
+                    }
+                    return r.getDefaultMessage();
+                }).toList();
+        response.setErrors(errors);
 
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }

@@ -77,18 +77,41 @@ docker-compose up app
   or not.
 ## 3. REST API
 ### 3.1 Available Endpoints
-To-Do
+The application exposes a RESTful API for User management under the `/api/v1/users` path:
+
+| Method | Endpoint             | Description                         |
+|--------|----------------------|-------------------------------------|
+| GET    | `/api/v1/users`      | List all users (paginated)          |
+| POST   | `/api/v1/users`      | Create a new user                   |
+| GET    | `/api/v1/users/{id}` | Get user details by ID              |
+| PUT    | `/api/v1/users/{id}` | Update an existing user             |
+| DELETE | `/api/v1/users/{id}` | Delete a user                       |
+
 ### 3.2 Swagger
 After running the app you should be able to access Swagger API Docs through this link: http://localhost:8080/swagger-ui/index.html
 ## 4. Metrics, Monitoring & Tracing
-To-Do
+The application uses **Spring Boot Actuator** to expose operational information.
+- **Metrics**: Accessible via `/actuator/metrics`.
+- **Health Checks**: Check application status at `/actuator/health`.
+- **Prometheus**: Metrics are formatted for Prometheus scraping at `/actuator/prometheus`.
+
 ## 5. Quality: Code Coverage & Quality Gates
 ### 5.1 Running Unit Tests
+Execute unit tests using Gradle:
+```shell
+./gradlew test
+```
 ### 5.2 Integration Tests & Testcontainers
+Integration tests use **Testcontainers** to spin up a real PostgreSQL instance during the test phase. Run them with:
+```shell
+./gradlew integrationTest
+```
 ### 5.3 Code Coverage & Quality Gates
+Code coverage is measured using **JaCoCo**. Reports are generated after running tests and can be found in `build/reports/jacoco`. Quality gates are enforced via **SonarCloud** integration.
 ### 5.4 Load Test using k6
+Load testing scripts are located in the `/k6` directory. You can run them using the k6 CLI to simulate concurrent users and measure API performance.
+
 ## 6. On the way for _production_
-To-Do
 ### 6.1 Application Profiles
 | Profile            | Configuration File    |
 |--------------------|-----------------------|
@@ -104,10 +127,11 @@ profile. Feel free to create new profiles, new application yml config files and 
 
 There are many ways to create, manage and use profiles. More on Spring Boot profiles capabilities [here](https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.profiles)
 ### 6.2 GitHub Actions Workflow (CI)
+The project includes a GitHub Actions pipeline defined in `.github/workflows/main.yml` that automates the Continuous Integration process.
 #### 6.2.1 Test Steps
-To-Do
+The workflow executes unit and integration tests using Gradle. It leverages Testcontainers for database-dependent tests and generates code coverage reports.
 #### 6.2.2 Build Steps
-To-Do
+Upon successful testing, the workflow builds the application artifacts and performs static code analysis via SonarCloud to ensure quality gates are met.
 
 ---
 In order to execute the workflow defined in _**.github/workflows/main.yml**_ it's required to change repository workflow 
