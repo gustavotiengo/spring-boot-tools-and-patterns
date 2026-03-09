@@ -1,2 +1,8 @@
 rootProject.name = 'springtools'
 System.setProperty("sonar.gradle.skipCompile", "true")
+
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+    }
+}

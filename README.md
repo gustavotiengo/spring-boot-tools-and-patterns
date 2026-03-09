@@ -13,8 +13,8 @@ database migrations, system metrics and tracing, build tools and much more...
 
 For building and running the application you need:
 
-- [JDK 17](https://openjdk.org/projects/jdk/17/)
-- [Gradle 8.6](https://gradle.org/) (Recommended use of gradle wrapper)
+- [JDK 21](https://openjdk.org/projects/jdk/21/)
+- [Gradle 9.4](https://gradle.org/) (Recommended use of gradle wrapper)
 - [Docker 25](https://docs.docker.com/engine/release-notes/25.0/)
 
 ## 2. Running the application locally

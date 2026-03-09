@@ -21,12 +21,11 @@ jobs:
         uses: 'actions/setup-java@v4'
         with:
           distribution: temurin
-          java-version: 17
+          java-version: 21
+          cache: gradle
 
       - name: Setup Gradle
-        uses: 'gradle/gradle-build-action@v3'
-        with:
-          gradle-version: 8.6
+        uses: gradle/actions/setup-gradle@v4
 
       - name: Cache Gradle packages
         uses: 'actions/cache@v4'
