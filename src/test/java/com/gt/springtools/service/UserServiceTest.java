@@ -100,13 +100,13 @@ class UserServiceTest {
 
         assertThat(user).isNotNull();
         assertThat(user.getExternalId()).isEqualTo("0ea9c10b-8d45-4c42-bbe0-8f30ea6f35df");
-        assertThat(user.getName()).isEqualTo("John");
-        assertThat(user.getPhone()).isEqualTo("+55 11 5551122");
-        assertThat(user.getEmail()).isEqualTo("john@email.com");
-        assertThat(user.getAddress()).isEqualTo("Test Street");
-        assertThat(user.getRegion()).isEqualTo("Manhattan");
-        assertThat(user.getCity()).isEqualTo("New York");
-        assertThat(user.getState()).isEqualTo("NY");
+        assertThat(user.name()).isEqualTo("John");
+        assertThat(user.phone()).isEqualTo("+55 11 5551122");
+        assertThat(user.email()).isEqualTo("john@email.com");
+        assertThat(user.address()).isEqualTo("Test Street");
+        assertThat(user.region()).isEqualTo("Manhattan");
+        assertThat(user.city()).isEqualTo("New York");
+        assertThat(user.state()).isEqualTo("NY");
         assertThat(user.getCreatedAt()).isEqualTo(LocalDateTime.MAX);
         assertThat(user.getLastUpdate()).isEqualTo(LocalDateTime.MIN);
 
@@ -129,13 +129,13 @@ class UserServiceTest {
         UserDTO user = userService.save(existentUser, existentUser.getExternalId());
         assertThat(user).isNotNull();
         assertThat(user.getExternalId()).isEqualTo("0ea9c10b-8d45-4c42-bbe0-8f30ea6f35df");
-        assertThat(user.getName()).isEqualTo("John");
-        assertThat(user.getPhone()).isEqualTo("+55 11 5551122");
-        assertThat(user.getEmail()).isEqualTo("john@email.com");
-        assertThat(user.getAddress()).isEqualTo("Test Street");
-        assertThat(user.getRegion()).isEqualTo("Manhattan");
-        assertThat(user.getCity()).isEqualTo("New York");
-        assertThat(user.getState()).isEqualTo("NY");
+        assertThat(user.name()).isEqualTo("John");
+        assertThat(user.phone()).isEqualTo("+55 11 5551122");
+        assertThat(user.email()).isEqualTo("john@email.com");
+        assertThat(user.address()).isEqualTo("Test Street");
+        assertThat(user.region()).isEqualTo("Manhattan");
+        assertThat(user.city()).isEqualTo("New York");
+        assertThat(user.state()).isEqualTo("NY");
         assertThat(user.getCreatedAt()).isEqualTo(LocalDateTime.MAX);
         assertThat(user.getLastUpdate()).isEqualTo(LocalDateTime.MIN);
     }
@@ -159,13 +159,13 @@ class UserServiceTest {
         UserDTO user = userService.save(newUser, null);
         assertThat(user).isNotNull();
         assertThat(user.getExternalId()).isEqualTo(uuid.toString());
-        assertThat(user.getName()).isEqualTo("Mary");
-        assertThat(user.getPhone()).isEqualTo("+55 11 4441234");
-        assertThat(user.getEmail()).isEqualTo("mary@email.com");
-        assertThat(user.getAddress()).isEqualTo("Mary Street");
-        assertThat(user.getRegion()).isEqualTo("Bronx");
-        assertThat(user.getCity()).isEqualTo("New York");
-        assertThat(user.getState()).isEqualTo("NY");
+        assertThat(user.name()).isEqualTo("Mary");
+        assertThat(user.phone()).isEqualTo("+55 11 4441234");
+        assertThat(user.email()).isEqualTo("mary@email.com");
+        assertThat(user.address()).isEqualTo("Mary Street");
+        assertThat(user.region()).isEqualTo("Bronx");
+        assertThat(user.city()).isEqualTo("New York");
+        assertThat(user.state()).isEqualTo("NY");
         assertThat(user.getCreatedAt()).isNull();
         assertThat(user.getLastUpdate()).isNull();
     }

@@ -53,7 +53,7 @@ services:
     depends_on:
       - redis
   flyway:
-    image: flyway/flyway:9.22.3-alpine
+    image: flyway/flyway:12.1-alpine
     environment:
       - FLYWAY_EDITION=community
     command: -url=jdbc:postgresql://postgres:5432/springtools -schemas=public -user=admin -password=admin -connectRetries=3 migrate

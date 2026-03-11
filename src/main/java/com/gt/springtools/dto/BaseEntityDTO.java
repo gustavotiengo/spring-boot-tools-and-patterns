@@ -8,35 +8,18 @@ import jakarta.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class BaseEntityDTO implements Serializable {
+public interface BaseEntityDTO extends Serializable {
 
     @Pattern(regexp = Constants.UUID_V4)
     @Null
-    private final String externalId;
+    String getExternalId();
 
     @Null
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private final LocalDateTime createdAt;
+    LocalDateTime getCreatedAt();
+
     @Null
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private final LocalDateTime lastUpdate;
-
-    public BaseEntityDTO(String externalId, LocalDateTime createdAt, LocalDateTime lastUpdate) {
-        this.externalId = externalId;
-        this.createdAt = createdAt;
-        this.lastUpdate = lastUpdate;
-    }
-
-    public String getExternalId() {
-        return externalId;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public LocalDateTime getLastUpdate() {
-        return lastUpdate;
-    }
+    LocalDateTime getLastUpdate();
 
 }

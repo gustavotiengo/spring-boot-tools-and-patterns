@@ -24,15 +24,16 @@ public class UserRepository {
     }
 
     public List<UserDTO> findAll() {
-        return dbContext.select().from(USER).limit(QUERY_HARD_LIMIT).fetchInto(UserDTO.class);
+        return dbContext.select().from(USER).limit(QUERY_HARD_LIMIT)
+                .fetch(r -> new UserDTO(r.into(USER)));
     }
 
     public Optional<UserDTO> findByUuid(String uuid) {
-        return Optional.ofNullable(dbContext.select()
+        return dbContext.select()
                 .from(USER)
                 .where(USER.EXTERNAL_ID.eq(UUID.fromString(String.valueOf(uuid))))
                 .limit(1)
-                .fetchOneInto(UserDTO.class));
+                .fetchOptional(r -> new UserDTO(r.into(USER)));
     }
 
     public UUID insert(UserRecord user) {
