@@ -26,7 +26,7 @@ services:
       - COLLECTOR_OTLP_ENABLED=true
     restart: unless-stopped
   postgres:
-    image: 'postgres:16.2-alpine'
+    image: 'postgres:18.3-alpine'
     environment:
       - "POSTGRES_DB=springtools"
       - "POSTGRES_PASSWORD=admin"
@@ -34,10 +34,10 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - postgres:/var/lib/postgresql/data
+      - pg-data:/var/lib/postgresql
     restart: unless-stopped
   redis:
-    image: redis:7.2.4-alpine
+    image: redis:8.6.1-alpine
     command: redis-server
     ports:
       - "6379:6379"
@@ -135,7 +135,7 @@ volumes:
   sonarqube_logs:
   sonarqube_data:
   sonarqube_extensions:
-  postgres:
+  pg-data:
   redis:
   pg-sonarqube:
 networks:

@@ -70,8 +70,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<ResponseError> handleMethodValidationException(HandlerMethodValidationException e) {
         ResponseError response = new ResponseError(HttpStatus.BAD_REQUEST, e.getReason());
-        List<String> errors = e.getAllValidationResults().stream()
-                .flatMap(v -> v.getResolvableErrors().stream())
+        List<String> errors = e.getAllErrors().stream()
                 .map(r -> {
                     if (r instanceof FieldError f) {
                         return MessageFormat.format("{0}: {1}", f.getField(), f.getDefaultMessage());

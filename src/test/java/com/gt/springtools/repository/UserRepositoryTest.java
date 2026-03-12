@@ -27,12 +27,12 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @ActiveProfiles("tc")
 class UserRepositoryTest {
 
-    private static final PostgreSQLContainer pgContainer;
+    private static final PostgreSQLContainer<?> pgContainer;
     private static final String POSTGRES_IMAGE = "postgres:15.1-alpine";
     private static final String POSTGRES_DATABASE_NAME = "springtools";
 
     static {
-        pgContainer = new PostgreSQLContainer(POSTGRES_IMAGE);
+        pgContainer = new PostgreSQLContainer<>(POSTGRES_IMAGE);
         pgContainer.withDatabaseName(POSTGRES_DATABASE_NAME);
         pgContainer.start();
     }
