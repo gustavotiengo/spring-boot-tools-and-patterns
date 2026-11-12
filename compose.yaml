@@ -91,7 +91,7 @@ services:
       - sonar-network
     restart: unless-stopped
   prometheus:
-    image: bitnami/prometheus:latest
+    image: soldevelo/prometheus:latest
     ports:
       - "9090:9090"
     restart: unless-stopped
